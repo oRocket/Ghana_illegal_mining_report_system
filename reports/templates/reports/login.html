@@ -1,51 +1,90 @@
-{% extends 'base.html' %} <!-- Updated to reflect the new path -->
+{% extends 'base.html' %}
+
+{% load static %}
 
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
-    <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-    <form method="POST" class="space-y-4">
-        {% csrf_token %}
-        
-        <!-- Username or Email Field -->
-        <div>
-            <label for="username_or_email" class="block text-sm font-medium text-gray-700">Username or Email</label>
-            <input 
-                type="text" 
-                name="username_or_email" 
-                required 
-                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your username or email"
-            >
-        </div>
+<style>
+    .login-wrapper {
+        min-height: calc(100vh - 64px); /* Adjust for header height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 64px; /* Prevent footer overlap */
+        margin-top: 80px; /* Adjust to ensure content starts below the navbar */
+    }
 
-        <!-- Password Field -->
-        <div>
-            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-            <input 
-                type="password" 
-                name="password" 
-                required 
-                class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Enter your password"
-            >
-        </div>
+    .login-container {
+        max-width: 400px;
+        width: 100%;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-        <!-- Submit Button -->
-        <div class="text-center">
-            <button 
-                type="submit" 
-                class="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition duration-200"
-            >
-                Login
-            </button>
-        </div>
-    </form>
+    /* Background for the body */
+    body {
+        background-image: url("{% static 'images/login-galamsey.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
 
-    <!-- Error Message -->
-    {% if error %}
-        <p class="mt-4 text-red-600 text-center">{{ error }}</p>
-    {% endif %}
+<div class="login-wrapper">
+    <div class="login-container">
+        <h2 class="text-3xl font-bold mb-8 text-center">Login</h2>
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            
+            <!-- Username or Email Field -->
+            <div>
+                <label for="username_or_email" class="block text-lg font-bold mb-2">Username or Email</label>
+                <input 
+                    type="text" 
+                    name="username_or_email" 
+                    required 
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your username or email"
+                >
+            </div>
+
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-lg font-bold mb-2">Password</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    required 
+                    class="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your password"
+                >
+            </div>
+
+            <!-- Error Message -->
+            {% if error %}
+                <p class="mt-4 text-red-600 text-center">{{ error }}</p>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button 
+                    type="submit" 
+                    class="w-full py-2 px-4 bg-blue-600 text-white font-bold rounded-md hover:bg-blue-700 transition duration-200"
+                >
+                    Login
+                </button>
+            </div>
+        </form>
+
+        <!-- Registration Link -->
+        <p class="mt-4 text-center text-sm text-gray-600">
+            Don't have an account? 
+            <a href="{% url 'register' %}" class="text-blue-600 hover:underline">Register here</a>.
+        </p>
+
+    </div>
 </div>
 {% endblock %}

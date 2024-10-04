@@ -1,8 +1,121 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}Education{% endblock %}
+
+{% block content %}
 <h1>Learn About the Impact of Illegal Mining</h1>
+
+<!-- Blog Submission Form -->
+<h3 class="text-xl font-bold mb-4">Submit a New Blog Post</h3>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <!-- Display form errors here -->
+    {% if form.non_field_errors %}
+        <div class="text-red-500 mb-4">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
+    <!-- Title Field -->
+    <div class="mb-4">
+        <label for="id_title" class="block text-gray-700 font-bold mb-2">Title of the Blog Post</label>
+        <input type="text" id="id_title" name="title" value="{{ form.title.value|default:'' }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter the title here">
+        <!-- Display individual field errors -->
+        {% if form.title.errors %}
+            <p class="text-red-500">{{ form.title.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Author Field -->
+    <div class="mb-4">
+        <label for="id_author" class="block text-gray-700 font-bold mb-2">Author's Name</label>
+        <input type="text" id="id_author" name="author" value="{{ form.author.value|default:'' }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter your name">
+        {% if form.author.errors %}
+            <p class="text-red-500">{{ form.author.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Content Field -->
+    <div class="mb-4">
+        <label for="id_content" class="block text-gray-700 font-bold mb-2">Content</label>
+        <textarea id="id_content" name="content" class="w-full p-2 border border-gray-300 rounded" rows="5" placeholder="Write the content here">{{ form.content.value|default:'' }}</textarea>
+        {% if form.content.errors %}
+            <p class="text-red-500">{{ form.content.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Images Field -->
+    <div class="mb-4">
+        <label for="id_images" class="block text-gray-700 font-bold mb-2">Images (optional)</label>
+        <input type="file" id="id_images" name="images" class="w-full p-2 border border-gray-300 rounded">
+        {% if form.images.errors %}
+            <p class="text-red-500">{{ form.images.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Categories/Tags Field -->
+    <div class="mb-4">
+        <label for="id_categories" class="block text-gray-700 font-bold mb-2">Categories/Tags</label>
+        <input type="text" id="id_categories" name="categories" value="{{ form.categories.value|default:'' }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter categories or tags">
+        {% if form.categories.errors %}
+            <p class="text-red-500">{{ form.categories.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- References Field -->
+    <div class="mb-4">
+        <label for="id_references" class="block text-gray-700 font-bold mb-2">References</label>
+        <textarea id="id_references" name="references" class="w-full p-2 border border-gray-300 rounded" rows="3" placeholder="Enter any references here">{{ form.references.value|default:'' }}</textarea>
+        {% if form.references.errors %}
+            <p class="text-red-500">{{ form.references.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Summary Field -->
+    <div class="mb-4">
+        <label for="id_summary" class="block text-gray-700 font-bold mb-2">Summary/Excerpt</label>
+        <textarea id="id_summary" name="summary" class="w-full p-2 border border-gray-300 rounded" rows="3" placeholder="Enter a summary or excerpt">{{ form.summary.value|default:'' }}</textarea>
+        {% if form.summary.errors %}
+            <p class="text-red-500">{{ form.summary.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Call to Action Field -->
+    <div class="mb-4">
+        <label for="id_call_to_action" class="block text-gray-700 font-bold mb-2">Call to Action (optional)</label>
+        <textarea id="id_call_to_action" name="call_to_action" class="w-full p-2 border border-gray-300 rounded" rows="2" placeholder="Enter a call to action">{{ form.call_to_action.value|default:'' }}</textarea>
+        {% if form.call_to_action.errors %}
+            <p class="text-red-500">{{ form.call_to_action.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Contact Information Field -->
+    <div class="mb-4">
+        <label for="id_contact_info" class="block text-gray-700 font-bold mb-2">Contact Information (optional)</label>
+        <input type="text" id="id_contact_info" name="contact_info" value="{{ form.contact_info.value|default:'' }}" class="w-full p-2 border border-gray-300 rounded" placeholder="Enter contact info">
+        {% if form.contact_info.errors %}
+            <p class="text-red-500">{{ form.contact_info.errors }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded">
+        Submit Blog Post
+    </button>
+</form>
+
+<!-- Display Existing Articles -->
+<h3 class="text-xl font-bold mt-8 mb-4">Existing Articles</h3>
 <div>
     {% for article in articles %}
-        <h2>{{ article.title }}</h2>
+        <h2 class="text-lg font-semibold">{{ article.title }}</h2>
         <p>{{ article.content }}</p>
-        <small>Published on {{ article.date_published }}</small>
+        <small>Published on {{ article.date }}</small>
+        <hr class="my-4">
+    {% empty %}
+        <p>No articles available at this time.</p>
     {% endfor %}
 </div>
+
+{% endblock %}

@@ -1,57 +1,97 @@
-<!-- illegal_mining_report/reports/templates/reports/dashboard.html -->
 {% extends 'base.html' %}
-
+{% load custom_filters %}
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="container mx-auto p-4">
-    <h2 class="text-2xl font-bold mb-4">Welcome, {{ user.first_name }}!</h2>
 
-    <!-- Search Form -->
-    <form method="GET" action="" class="mb-6">
-        <div class="flex items-center mb-2">
-            {{ search_form.as_p }}
-            <button type="submit" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                Search
-            </button>
+<style>
+    .container {
+        margin-top: 80px; /* Adjust to ensure content starts below the navbar */
+    }
+</style>
+
+<div class="container mx-auto p-6 mt-0">
+    <!-- Welcome message and Search Form -->
+    <div class="flex flex-col md:flex-row justify-center md:justify-between items-center mb-8">
+        <!-- Welcome Message -->
+        <h4 class="text-3xl font-bold w-full md:w-auto flex justify-center md:justify-start text-center mb-4 md:mb-0">
+            Welcome, {{ user.first_name }}!
+        </h4>
+
+        <!-- Search Form -->
+        <div class="w-full md:w-auto flex justify-center md:justify-start text-center mb-4 md:mb-0">
+            <form method="GET" action="" class="flex w-full md:w-auto justify-center">
+                <div class="flex w-full">
+                    {{ search_form.location|add_class:"placeholder-gray-500" }}
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-l-none rounded-r">
+                        Search
+                    </button>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 
-    <div class="mb-6">
-        <h3 class="text-xl font-semibold mb-2">Recent Reports</h3>
-        <ul class="list-disc pl-5">
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between mb-8">
+        <a href="{% url 'submit_report' %}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            Submit Report
+        </a>
+        <a href="{% url 'education' %}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+            Write a Blog
+        </a>
+    </div>
+
+    <!-- Recent Reports Section -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <h3 class="text-2xl font-semibold mb-4">Recent Reports</h3>
+        <ul class="list-disc pl-6">
             {% for report in recent_reports %}
-                <li class="mb-1">{{ report.title }} - {{ report.location }} ({{ report.date_time }})</li>
+                <li class="mb-2 text-gray-700">
+                    <span class="font-bold">{{ report.title }}</span> 
+                    <span class="text-sm text-gray-500">({{ report.date_time }})</span>
+                    <br>
+                    <span class="text-sm text-gray-600">{{ report.location }}</span>
+                </li>
             {% empty %}
-                <li>No recent reports found.</li>
+                <li class="text-gray-500">No recent reports found.</li>
             {% endfor %}
         </ul>
     </div>
 
-    <div class="mb-6">
-        <h3 class="text-xl font-semibold mb-2">Recent Blogs</h3>
-        <ul class="list-disc pl-5">
+    <!-- Recent Blogs Section -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <h3 class="text-2xl font-semibold mb-4">Recent Blogs</h3>
+        <ul class="list-disc pl-6">
             {% for blog in recent_blogs %}
-                <li class="mb-1">{{ blog.title }} - {{ blog.date_published }}</li>
+                <li class="mb-2 text-gray-700">
+                    <span class="font-bold">{{ blog.title }}</span> 
+                    <span class="text-sm text-gray-500">Published on {{ blog.date_published }}</span>
+                </li>
             {% empty %}
-                <li>No recent blogs found.</li>
+                <li class="text-gray-500">No recent blogs found.</li>
             {% endfor %}
         </ul>
     </div>
 
-    <div class="mb-6">
-        <h3 class="text-xl font-semibold mb-2">Statistics</h3>
-        <p class="mb-1"><strong>Total Reports:</strong> {{ total_reports }}</p>
-        <p class="mb-1"><strong>Resolved Cases:</strong> {{ resolved_cases }}</p>
+    <!-- Statistics Section -->
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <h3 class="text-2xl font-semibold mb-4">Statistics</h3>
+        <p class="mb-2"><strong>Total Reports:</strong> {{ total_reports }}</p>
+        <p class="mb-2"><strong>Resolved Cases:</strong> {{ resolved_cases }}</p>
     </div>
 
-    <div>
-        <h3 class="text-xl font-semibold mb-2">Most Affected Areas</h3>
-        <ul class="list-disc pl-5">
+    <!-- Most Affected Areas Section -->
+    <div class="bg-white shadow-md rounded-lg p-6">
+        <h3 class="text-2xl font-semibold mb-4">Most Affected Areas</h3>
+        <ul class="list-disc pl-6">
             {% for area in most_affected_areas %}
-                <li class="mb-1">{{ area.location }} - {{ area.count }}</li>
+                <li class="mb-2 text-gray-700">
+                    <span class="font-bold">{{ area.location }}</span>
+                    <span class="text-sm text-gray-500">- {{ area.count }} reports</span>
+                </li>
             {% empty %}
-                <li>No affected areas found.</li>
+                <li class="text-gray-500">No affected areas found.</li>
             {% endfor %}
         </ul>
     </div>

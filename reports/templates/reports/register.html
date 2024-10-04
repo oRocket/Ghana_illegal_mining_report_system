@@ -1,47 +1,76 @@
 {% extends 'base.html' %}
 
+{% load static %}
 {% load custom_filters %}
 
 {% block title %}Register{% endblock %}
 
 {% block content %}
-<div class="flex justify-center items-center h-screen">  <!-- Full-screen centered container -->
-    <div class="w-2/3 bg-white shadow-md rounded px-12 pt-8 pb-10">  <!-- Form container taking 2/3 of the width with more padding -->
+<style>
+    .register-wrapper {
+        min-height: calc(100vh - 64px); /* Adjust for header height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 64px; /* Prevent footer overlap */
+        margin-top: 80px; /* Adjust to ensure content starts below the navbar */
+    }
+
+    .register-container {
+        width: 100%;
+        max-width: 600px;
+        background-color: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Background for the body */
+    body {
+        background-image: url("{% static 'images/register-galamsey.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+</style>
+
+<div class="register-wrapper">
+    <div class="register-container">
         <h2 class="text-3xl font-bold mb-8 text-center">Register</h2>
         <form method="POST">
             {% csrf_token %}
 
             <!-- Username and Email -->
-            <div class="flex mb-6">
-                <div class="w-1/2 pr-4">  <!-- Username on the left -->
+            <div class="md:flex md:space-x-4 mb-6">
+                <div class="md:w-1/2 w-full mb-4 md:mb-0">  <!-- Username -->
                     <label for="id_username" class="block text-lg font-bold mb-2">Username:</label>
                     {{ form.username|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
-                <div class="w-1/2 pl-4">  <!-- Email on the right -->
+                <div class="md:w-1/2 w-full">  <!-- Email -->
                     <label for="id_email" class="block text-lg font-bold mb-2">Email:</label>
                     {{ form.email|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
             </div>
 
             <!-- First Name and Last Name -->
-            <div class="flex mb-6">
-                <div class="w-1/2 pr-4">  <!-- First Name on the left -->
+            <div class="md:flex md:space-x-4 mb-6">
+                <div class="md:w-1/2 w-full mb-4 md:mb-0">  <!-- First Name -->
                     <label for="id_first_name" class="block text-lg font-bold mb-2">First Name:</label>
                     {{ form.first_name|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
-                <div class="w-1/2 pl-4">  <!-- Last Name on the right -->
+                <div class="md:w-1/2 w-full">  <!-- Last Name -->
                     <label for="id_last_name" class="block text-lg font-bold mb-2">Last Name:</label>
                     {{ form.last_name|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
             </div>
 
             <!-- Password and Confirm Password -->
-            <div class="flex mb-6">
-                <div class="w-1/2 pr-4">  <!-- Password on the left -->
+            <div class="md:flex md:space-x-4 mb-6">
+                <div class="md:w-1/2 w-full mb-4 md:mb-0">  <!-- Password -->
                     <label for="id_password1" class="block text-lg font-bold mb-2">Password:</label>
                     {{ form.password1|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
-                <div class="w-1/2 pl-4">  <!-- Confirm Password on the right -->
+                <div class="md:w-1/2 w-full">  <!-- Confirm Password -->
                     <label for="id_password2" class="block text-lg font-bold mb-2">Confirm Password:</label>
                     {{ form.password2|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
                 </div>
@@ -67,6 +96,14 @@
                 {% endfor %}
             </ul>
         {% endif %}
+
+        <!-- Already have an account? -->
+        <p class="text-center text-gray-600 mt-8">
+            Already have an account? 
+            <a href="{% url 'login' %}" class="text-blue-500 hover:text-blue-700 font-semibold">
+                Login
+            </a>
+        </p>
     </div>
 </div>
 {% endblock %}
