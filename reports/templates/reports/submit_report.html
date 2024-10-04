@@ -1,12 +1,129 @@
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block title %}Submit Report{% endblock %}
 
-    <!-- Hidden fields for automatically filling GPS coordinates -->
-    <input type="hidden" id="id_gps_coordinates" name="gps_coordinates">
+{% block content %}
+<div class="min-h-screen bg-gray-100 pt-16"> <!-- Add padding-top for the fixed navbar -->
+    <div class="container mx-auto p-4">
+        <h4 class="text-3xl font-bold text-center mb-6">Submit a Report</h4>
 
-    <button type="submit">Submit Report</button>
-</form>
+        <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
+            {% csrf_token %}
+            
+            <!-- Location Information -->
+            <h3 class="text-xl font-bold text-center mb-4">Location Information</h3>
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    {{ form.gps_coordinates }}
+                </div>
+                <div>
+                    <label for="id_region" class="block text-gray-700 font-bold mb-2">Region</label>
+                    {{ form.region }}
+                </div>
+            </div>
+            <div class="mb-4 grid grid-cols-1 md:flex md:justify-between">
+                <div class="md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                    <label for="id_town" class="block text-gray-700 font-bold mb-2">Town/Community Name</label>
+                    {{ form.town }}
+                </div>
+                <div class="md:w-1/2 md:ml-2">
+                    <label for="id_landmarks" class="block text-gray-700 font-bold mb-2">Nearby Landmarks (optional)</label>
+                    {{ form.landmarks }}
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Nature of the Mining Activity -->
+            <h3 class="text-xl font-bold text-center mb-4">Nature of the Mining Activity</h3>
+
+            <!-- Type of Mining and Scale of Operation -->
+            <div class="mb-4 grid grid-cols-1 md:flex md:justify-between">
+                <div class="md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                    <label for="id_mining_type" class="block text-gray-700 font-bold mb-2">Type of Mining (optional)</label>
+                    {{ form.mining_type }}
+                </div>
+                <div class="md:w-1/2 md:ml-2">
+                    <label for="id_scale" class="block text-gray-700 font-bold mb-2">Scale of Operation</label>
+                    {{ form.scale }}
+                </div>
+            </div>
+
+            <!-- Machinery Used and Method of Mining -->
+            <div class="mb-4 grid grid-cols-1 md:flex md:justify-between">
+                <div class="md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                    <label for="id_machinery_used" class="block text-gray-700 font-bold mb-2">Machinery Used</label>
+                    {{ form.machinery_used }}
+                </div>
+                <div class="md:w-1/2 md:ml-2">
+                    <label for="id_mining_method" class="block text-gray-700 font-bold mb-2">Method of Mining</label>
+                    {{ form.mining_method }}
+                </div>
+            </div>
+            <br><br>
+
+
+            <!-- Environmental Impact -->
+            <h3 class="text-xl font-bold text-center mb-4">Environmental Impact</h3>
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="id_environmental_impact" class="block text-gray-700 font-bold mb-2">Effects (select one or more)</label>
+                    {{ form.environmental_impact }}
+                </div>
+            </div>
+
+            <!-- Option to upload photos -->
+            <h3 class="text-xl font-bold text-center mb-4">Upload Photos</h3>
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="id_photo" class="block text-gray-700 font-bold mb-2">Upload Photos (optional)</label>
+                    {{ form.photo }}
+                </div>
+            </div>
+            <br><br>
+
+
+            <!-- Suspected Individuals -->
+            <h3 class="text-xl font-bold text-center mb-4">Suspected Individuals</h3>
+            <div class="mb-4 grid grid-cols-1 md:flex md:justify-between">
+                <div class="md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                    <label for="id_suspected_individuals" class="block text-gray-700 font-bold mb-2">Names (optional)</label>
+                    {{ form.suspected_individuals }}
+                </div>
+                <div class="md:w-1/2 md:ml-2">
+                    <label for="id_num_people_involved" class="block text-gray-700 font-bold mb-2">Number of People Involved (optional)</label>
+                    {{ form.num_people_involved }}
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Personal Information -->
+            <h3 class="text-xl font-bold text-center mb-4">Personal Information (optional)</h3>
+            <div class="mb-4 grid grid-cols-1 md:flex md:justify-between">
+                <div class="md:w-1/2 md:mr-2 mb-4 md:mb-0">
+                    <label for="id_reporter_name" class="block text-gray-700 font-bold mb-2">Your Name (optional)</label>
+                    {{ form.reporter_name }}
+                </div>
+                <div class="md:w-1/2 md:ml-2">
+                    <label for="id_reporter_contact" class="block text-gray-700 font-bold mb-2">Your Contact Number (optional)</label>
+                    {{ form.reporter_contact }}
+                </div>
+            </div>
+            <br><br>
+
+            <!-- Additional Comments -->
+            <h3 class="text-xl font-bold text-center mb-4">Additional Comments (optional)</h3>
+            <div class="mb-4">
+                <label for="id_additional_comments" class="block text-gray-700 font-bold mb-2">Comments</label>
+                {{ form.additional_comments }}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded mt-4">
+                Submit Report
+            </button>
+        </form>
+    </div>
+</div>
 
 <script>
     // Function to get the user's location using the browser's Geolocation API
@@ -28,3 +145,4 @@
         getLocation();
     };
 </script>
+{% endblock %}

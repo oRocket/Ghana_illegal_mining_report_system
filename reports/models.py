@@ -21,18 +21,24 @@ class Report(models.Model):
         return f"{self.location} - {self.mining_type}"
 
 class EducationalContent(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=200)
     content = models.TextField()
-    date_published = models.DateField(auto_now_add=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
 
-class BlogPost(models.Model):  # Add this class for blog posts
-    title = models.CharField(max_length=255)
+class BlogPost(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
-    date_published = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)  # Link to User model
+    images = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Adjust the upload_to path as needed
+    categories = models.CharField(max_length=200, blank=True, null=True)  # Consider using a ManyToManyField for categories
+    references = models.TextField(blank=True, null=True)
+    summary = models.TextField()
+    call_to_action = models.TextField(blank=True, null=True)
+    contact_info = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.title

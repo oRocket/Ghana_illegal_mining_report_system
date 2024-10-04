@@ -6,6 +6,9 @@ from .forms import ReportForm, CustomUserCreationForm, SearchForm  # Import the 
 from .models import Report, EducationalContent, BlogPost  # Update import to include BlogPost
 from django.contrib.auth.models import User
 from django.db import models  # Add this import at the top of your file
+from .forms import BlogPostForm
+from .models import BlogPost
+
 
 def register(request):
     if request.method == 'POST':
@@ -59,19 +62,19 @@ def submit_report(request):
             return redirect('home')
     else:
         form = ReportForm()
-    return render(request, 'submit_report.html', {'form': form})
+    return render(request, 'reports/submit_report.html', {'form': form})
 
 def report_list(request):
     reports = Report.objects.all()
-    return render(request, 'report_list.html', {'reports': reports})
+    return render(request, 'reports/report_list.html', {'reports': reports})
 
 def education(request):
-    articles = EducationalContent.objects.all().order_by('-date_published')
-    return render(request, 'education.html', {'articles': articles})
+    articles = EducationalContent.objects.all().order_by('-date')
+    return render(request, 'reports/education.html', {'articles': articles})
 
 def home(request):
     recent_incidents = Report.objects.all().order_by('-date_time')[:5]  # Fetch latest 5 incidents
-    recent_blogs = BlogPost.objects.all().order_by('-date_published')[:5]  # Fetch latest 5 blogs
+    recent_blogs = BlogPost.objects.all().order_by('-date')[:5]  # Change to '-date' instead of '-date_published'
     return render(request, 'reports/home.html', {
         'recent_incidents': recent_incidents,
         'recent_blogs': recent_blogs,
@@ -87,7 +90,7 @@ def dashboard(request):
     else:
         recent_reports = Report.objects.all().order_by('-date_time')[:5]
 
-    recent_blogs = BlogPost.objects.all().order_by('-date_published')[:5]
+    recent_blogs = BlogPost.objects.all().order_by('-date')[:5]  # Change to '-date' instead of '-date_published'
 
     # Statistics
     total_reports = Report.objects.count()
@@ -103,3 +106,23 @@ def dashboard(request):
         'search_form': search_form,  # Ensure this line is present
     })
 
+
+def education(request):
+    if request.method == 'POST':
+        form = BlogPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save()
+            # Redirect to the same page or another page after successful submission
+            return redirect('education')  # Assuming 'education' is the name of the URL
+        else:
+            # If the form is invalid, display errors
+            return render(request, 'reports/education.html', {'form': form})
+    else:
+        # Show the empty form for GET requests
+        form = BlogPostForm()
+    
+    # Get all blog posts to display
+    articles = BlogPost.objects.all().order_by('-date')  # Assuming you want to order by most recent
+
+    return render(request, 'reports/education.html', {'form': form, 'articles': articles})
