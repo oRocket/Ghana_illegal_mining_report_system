@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Site{% endblock %}</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Flowbite CSS -->
+    <link href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 py-4 dark:bg-gray-900 z-50"> <!-- Fixed Navbar -->
+        <div class="max-w-screen-xl mx-auto px-4 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <span class="text-2xl font-bold text-purple-700 dark:text-white">GIMRS</span>
+            </a>
+
+            <!-- Desktop Navigation Links -->
+            <nav class="hidden lg:flex space-x-6">
+                <a href="{% url 'home' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Home</a>
+                <a href="{% url 'report_list' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Reports</a>
+                <a href="{% url 'education' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Education</a>
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Logout</a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Register</a>
+                    <a href="{% url 'login' %}" class="text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Login</a>
+                {% endif %}
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button data-collapse-toggle="mobile-menu" type="button" class="lg:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-600" aria-controls="mobile-menu" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <!-- Hamburger Icon -->
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M3 5h14M3 10h14M3 15h14" 
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div class="lg:hidden" id="mobile-menu">
+            <ul class="flex flex-col space-y-2 px-4 pb-4">
+                <li>
+                    <a href="{% url 'home' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'report_list' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Reports</a>
+                </li>
+                <li>
+                    <a href="{% url 'education' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Education</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'logout' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Logout</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'register' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Register</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'login' %}" class="block text-gray-700 dark:text-gray-300 hover:bg-blue-500 hover:text-white dark:hover:text-white px-2 py-1 rounded font-bold">Login</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer class="bg-white shadow mt-6">
+        <div class="max-w-6xl mx-auto px-4 py-4">
+            <p class="text-center">&copy; 2024 Illegal Mining Reports</p>
+        </div>
+    </footer>
+
+    <!-- Flowbite JS -->
+    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!-- illegal_mining_report/reports/templates/reports/dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-4">
+    <h2 class="text-2xl font-bold mb-4">Welcome, {{ user.first_name }}!</h2>
+
+    <!-- Search Form -->
+    <form method="GET" action="" class="mb-6">
+        <div class="flex items-center mb-2">
+            {{ search_form.as_p }}
+            <button type="submit" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Search
+            </button>
+        </div>
+    </form>
+
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">Recent Reports</h3>
+        <ul class="list-disc pl-5">
+            {% for report in recent_reports %}
+                <li class="mb-1">{{ report.title }} - {{ report.location }} ({{ report.date_time }})</li>
+            {% empty %}
+                <li>No recent reports found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">Recent Blogs</h3>
+        <ul class="list-disc pl-5">
+            {% for blog in recent_blogs %}
+                <li class="mb-1">{{ blog.title }} - {{ blog.date_published }}</li>
+            {% empty %}
+                <li>No recent blogs found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="mb-6">
+        <h3 class="text-xl font-semibold mb-2">Statistics</h3>
+        <p class="mb-1"><strong>Total Reports:</strong> {{ total_reports }}</p>
+        <p class="mb-1"><strong>Resolved Cases:</strong> {{ resolved_cases }}</p>
+    </div>
+
+    <div>
+        <h3 class="text-xl font-semibold mb-2">Most Affected Areas</h3>
+        <ul class="list-disc pl-5">
+            {% for area in most_affected_areas %}
+                <li class="mb-1">{{ area.location }} - {{ area.count }}</li>
+            {% empty %}
+                <li>No affected areas found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

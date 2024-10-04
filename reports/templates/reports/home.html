@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Illegal Mining Report{% endblock %}
+
+{% block content %}
+<div class="relative bg-gradient-to-r from-purple-600 to-blue-600 h-screen text-white overflow-hidden">
+  <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.effective-states.org/wp-content/uploads/2017/05/galamsey-ghana-illegal-mining-effective-states-abdulai-manchester2.jpg');">
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
+    <h1 class="text-5xl font-bold leading-tight mb-4">Ghana Illegal Mining Reporting System</h1>
+    <p class="text-xl text-gray-300 mb-8">Join us in the fight against illegal mining activities that threaten our environment and communities.</p>
+    <a href="{% url 'register' %}" class="bg-yellow-400 text-gray-900 hover:bg-yellow-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">Get Involved</a> <!-- Updated link to register.html -->
+  </div>
+</div>
+
+<h1>Recent Illegal Mining Incidents</h1>
+<ul>
+    {% for incident in recent_incidents %}
+        <li>
+            <strong>Location:</strong> {{ incident.location }}<br>
+            <strong>Type:</strong> {{ incident.mining_type }}<br>
+            <strong>Reported on:</strong> {{ incident.date_time }}<br>
+            <strong>Description:</strong> {{ incident.description }}<br>
+            {% if incident.photo %}
+                <img src="{{ incident.photo.url }}" alt="Incident Photo" style="max-width: 200px;"><br>
+            {% endif %}
+        </li>
+    {% empty %}
+        <li>No recent incidents reported.</li>
+    {% endfor %}
+</ul>
+
+<h1>Latest Blog Posts on Illegal Mining</h1>
+<ul>
+    {% for blog in recent_blogs %}
+        <li>
+            <strong>Title:</strong> {{ blog.title }}<br>
+            <strong>Published on:</strong> {{ blog.date_published }}<br>
+            <p>{{ blog.content|truncatewords:30 }}</p> <!-- Show first 30 words -->
+            <a href="{% url 'blog_detail' blog.id %}">Read more</a> <!-- Adjust URL as needed -->
+        </li>
+    {% empty %}
+        <li>No blog posts available.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

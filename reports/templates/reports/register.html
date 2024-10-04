@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center h-screen">  <!-- Full-screen centered container -->
+    <div class="w-2/3 bg-white shadow-md rounded px-12 pt-8 pb-10">  <!-- Form container taking 2/3 of the width with more padding -->
+        <h2 class="text-3xl font-bold mb-8 text-center">Register</h2>
+        <form method="POST">
+            {% csrf_token %}
+
+            <!-- Username and Email -->
+            <div class="flex mb-6">
+                <div class="w-1/2 pr-4">  <!-- Username on the left -->
+                    <label for="id_username" class="block text-lg font-bold mb-2">Username:</label>
+                    {{ form.username|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+                <div class="w-1/2 pl-4">  <!-- Email on the right -->
+                    <label for="id_email" class="block text-lg font-bold mb-2">Email:</label>
+                    {{ form.email|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+            </div>
+
+            <!-- First Name and Last Name -->
+            <div class="flex mb-6">
+                <div class="w-1/2 pr-4">  <!-- First Name on the left -->
+                    <label for="id_first_name" class="block text-lg font-bold mb-2">First Name:</label>
+                    {{ form.first_name|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+                <div class="w-1/2 pl-4">  <!-- Last Name on the right -->
+                    <label for="id_last_name" class="block text-lg font-bold mb-2">Last Name:</label>
+                    {{ form.last_name|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+            </div>
+
+            <!-- Password and Confirm Password -->
+            <div class="flex mb-6">
+                <div class="w-1/2 pr-4">  <!-- Password on the left -->
+                    <label for="id_password1" class="block text-lg font-bold mb-2">Password:</label>
+                    {{ form.password1|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+                <div class="w-1/2 pl-4">  <!-- Confirm Password on the right -->
+                    <label for="id_password2" class="block text-lg font-bold mb-2">Confirm Password:</label>
+                    {{ form.password2|add_class:"w-full py-2 px-3 border border-gray-300 rounded" }}
+                </div>
+            </div>
+
+            <!-- Submit button -->
+            <div class="flex justify-center">
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded text-lg">
+                    Register
+                </button>
+            </div>
+        </form>
+
+        {% if form.errors %}
+            <ul class="text-red-500 mt-6">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <!-- Hidden fields for automatically filling GPS coordinates -->
+    <input type="hidden" id="id_gps_coordinates" name="gps_coordinates">
+
+    <button type="submit">Submit Report</button>
+</form>
+
+<script>
+    // Function to get the user's location using the browser's Geolocation API
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                document.getElementById('id_gps_coordinates').value =
+                    position.coords.latitude + ', ' + position.coords.longitude;
+            }, function(error) {
+                console.error("Error getting GPS coordinates: ", error);
+            });
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+    }
+
+    // Automatically call getLocation on page load
+    window.onload = function() {
+        getLocation();
+    };
+</script>

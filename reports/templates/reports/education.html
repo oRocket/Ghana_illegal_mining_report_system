@@ -1,0 +1,8 @@
+<h1>Learn About the Impact of Illegal Mining</h1>
+<div>
+    {% for article in articles %}
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+        <small>Published on {{ article.date_published }}</small>
+    {% endfor %}
+</div>
