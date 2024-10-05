@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Blog - {{ blog_post.title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-16 px-4">
+    <div class="max-w-4xl mx-auto bg-white shadow-md p-8 rounded-lg">
+        <h1 class="text-3xl font-bold text-gray-800 mb-6">Edit Blog Post</h1>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Blog Title -->
+            <div class="mb-4">
+                <label for="title" class="block text-gray-700 text-sm font-bold mb-2">Title:</label>
+                <input type="text" name="title" id="title" value="{{ blog_post.title }}" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <!-- Blog Content -->
+            <div class="mb-4">
+                <label for="content" class="block text-gray-700 text-sm font-bold mb-2">Content:</label>
+                <textarea name="content" id="content" rows="8" required
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ blog_post.content }}</textarea>
+            </div>
+
+            <!-- Blog Images -->
+            <div class="mb-4">
+                <label for="images" class="block text-gray-700 text-sm font-bold mb-2">Upload Images:</label>
+                <input type="file" name="images" id="images" accept="image/*"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+                {% if blog_post.images %}
+                <p class="mt-2 text-gray-600">Current Image:</p>
+                <img src="{{ blog_post.images.url }}" alt="Current Blog Image" class="mt-2 w-full rounded-lg shadow-md">
+                {% endif %}
+            </div>
+
+            <!-- Categories -->
+            <div class="mb-4">
+                <label for="categories" class="block text-gray-700 text-sm font-bold mb-2">Categories:</label>
+                <input type="text" name="categories" id="categories" value="{{ blog_post.categories }}" required
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <!-- References -->
+            <div class="mb-4">
+                <label for="references" class="block text-gray-700 text-sm font-bold mb-2">References:</label>
+                <textarea name="references" id="references" rows="3"
+                          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">{{ blog_post.references }}</textarea>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="mb-4">
+                <label for="call_to_action" class="block text-gray-700 text-sm font-bold mb-2">Call to Action:</label>
+                <input type="text" name="call_to_action" id="call_to_action" value="{{ blog_post.call_to_action }}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <!-- Contact Information -->
+            <div class="mb-4">
+                <label for="contact_info" class="block text-gray-700 text-sm font-bold mb-2">Contact Information:</label>
+                <input type="text" name="contact_info" id="contact_info" value="{{ blog_post.contact_info }}"
+                       class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="mt-6">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                    Update Blog Post
+                </button>
+                <a href="{% url 'blog_detail' blog_post.id %}" class="ml-4 text-gray-500 hover:underline">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

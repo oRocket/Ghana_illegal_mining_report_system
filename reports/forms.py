@@ -49,15 +49,44 @@ EFFECT_CHOICES = [
     ('Land degradation', 'Land degradation')
 ]
 
+# class ReportForm(forms.ModelForm):
+#     class Meta:
+#         model = Report
+#         fields = '__all__'  # or list specific fields
+#         widgets = {
+#             'environmental_impact': forms.CheckboxSelectMultiple(),  # Allow multiple selections
+#         }
+
+
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = [
             'gps_coordinates', 'region', 'town', 'landmarks', 
             'mining_type', 'scale', 'machinery_used', 'mining_method', 
-            'environmental_impact', 'photo', 'suspected_individuals', 'num_people_involved', 
-            'reporter_name', 'reporter_contact', 'additional_comments'
+            'environmental_impact', 'photo', 'suspected_individuals', 
+            'num_people_involved', 'reporter_name', 'reporter_contact', 
+            'additional_comments'
         ]
+
+        widgets = {
+            'gps_coordinates': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter GPS Coordinates'}),
+            'region': forms.Select(attrs={'class': 'form-select'}),
+            'town': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Town/Community'}),
+            'landmarks': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Nearby Landmarks (optional)', 'rows': 2}),
+            'mining_type': forms.Select(attrs={'class': 'form-select'}),
+            'scale': forms.Select(attrs={'class': 'form-select'}),
+            'machinery_used': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Machinery Used'}),
+            'mining_method': forms.Select(attrs={'class': 'form-select'}),
+            'environmental_impact': forms.CheckboxSelectMultiple(),
+            'photo': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'suspected_individuals': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Suspected Individuals (optional)'}),
+            'num_people_involved': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter Number of People Involved'}),
+            'reporter_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Name (optional)'}),
+            'reporter_contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Contact Number (optional)'}),
+            'additional_comments': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Additional Comments (optional)', 'rows': 3}),
+        }
+
 
     gps_coordinates = forms.CharField(widget=forms.HiddenInput(), required=False)
     region = forms.ChoiceField(choices=REGION_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
@@ -80,13 +109,11 @@ class ReportForm(forms.ModelForm):
     reporter_contact = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Your contact number (optional)'}), required=False)
     additional_comments = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Any additional comments (optional)', 'rows': 4}), required=False)
 
-
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPost
         fields = [
             'title',
-            'author',
             'content',
             'images',
             'categories',
@@ -95,6 +122,8 @@ class BlogPostForm(forms.ModelForm):
             'call_to_action',
             'contact_info'
         ]
+
+
 
 class SearchForm(forms.Form):
     location = forms.CharField(

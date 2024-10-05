@@ -4,64 +4,96 @@
 
 {% block content %}
 <div class="container mx-auto mt-16 px-4"> <!-- Ensuring enough space from navbar -->
-    <div class="max-w-4xl mx-auto bg-white shadow-md p-8 rounded-lg">
+    <div class="max-w-4xl mx-auto bg-white shadow-lg p-8 rounded-lg">
         <!-- Blog Title -->
-        <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ blog.title }}</h1>
+        <h1 class="text-3xl font-bold text-gray-900 mb-6">{{ blog.title }}</h1> <!-- Reduced to text-3xl -->
 
         <!-- Author and Date -->
-        <p class="text-gray-500 mb-6">
-            By <span class="font-medium text-gray-700">{{ blog.author }}</span> | Published on {{ blog.date }}
+        <p class="text-gray-600 mb-4">
+            By <span class="font-semibold text-gray-800">{{ blog.full_name }}</span> | Published on {{ blog.date|date:"F j, Y" }}
         </p>
 
         <!-- Blog Content -->
-        <div class="prose max-w-none">
+        <div class="prose max-w-none mb-8">
             <p>{{ blog.content }}</p>
         </div>
 
         <!-- Blog Images -->
         {% if blog.images %}
         <div class="my-8">
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Images:</h3>
-            <img src="{{ blog.images.url }}" alt="Blog Image" class="w-full rounded-lg shadow-md">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Images:</h3> <!-- Reduced to text-2xl -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {% for image in blog.images.all %}
+                    <img src="{{ image.url }}" alt="Blog Image" class="w-full h-auto rounded-lg shadow-md">
+                {% endfor %}
+            </div>
         </div>
         {% endif %}
 
         <!-- Categories -->
         {% if blog.categories %}
         <div class="my-6">
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Categories:</h3>
-            <p class="text-gray-600">{{ blog.categories }}</p>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Categories:</h3> <!-- Reduced to text-2xl -->
+            <p class="text-gray-700">{{ blog.categories }}</p>
         </div>
         {% endif %}
 
         <!-- References -->
         {% if blog.references %}
         <div class="my-6">
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">References:</h3>
-            <p class="text-gray-600">{{ blog.references }}</p>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">References:</h3> <!-- Reduced to text-2xl -->
+            <p class="text-gray-700">{{ blog.references }}</p>
         </div>
         {% endif %}
 
         <!-- Call to Action -->
         {% if blog.call_to_action %}
         <div class="my-6">
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Call to Action:</h3>
-            <p class="text-blue-600 font-medium">{{ blog.call_to_action }}</p>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Call to Action:</h3> <!-- Reduced to text-2xl -->
+            <p class="text-blue-600 font-semibold">{{ blog.call_to_action }}</p>
         </div>
         {% endif %}
 
         <!-- Contact Information -->
         {% if blog.contact_info %}
         <div class="my-6">
-            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Contact Information:</h3>
-            <p class="text-gray-600">{{ blog.contact_info }}</p>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Contact Information:</h3> <!-- Reduced to text-2xl -->
+            <p class="text-gray-700">{{ blog.contact_info }}</p>
         </div>
         {% endif %}
 
+        {% if messages %}
+            <ul class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <div class="mt-8 flex justify-between">
+            <!-- Edit Blog Button -->
+            <a href="{% url 'edit_blog' blog.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
+                Edit Blog
+            </a>
+        
+            <!-- Delete Blog Button (only visible to the author) -->
+            {% if request.user == blog.author %}
+            <form action="{% url 'delete_blog' blog.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300"
+                        onclick="return confirm('Are you sure you want to delete this blog post?')">
+                    Delete Blog
+                </button>
+            </form>
+            {% endif %}
+        </div>
+        
+
         <!-- Back to Blog List Link -->
         <div class="mt-8">
-            <a href="{% url 'blog_list' %}" class="text-blue-500 hover:underline font-medium">← Back to All Blogs</a>
+            <a href="{% url 'blog_list' %}" class="text-blue-500 hover:underline font-medium transition duration-300">← Back to All Blogs</a>
         </div>
     </div>
 </div>
+
 {% endblock %}

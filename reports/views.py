@@ -7,6 +7,8 @@ from .models import Report, EducationalContent, BlogPost  # Update import to inc
 from django.contrib.auth.models import User
 from django.db import models  # Add this import at the top of your file
 from .forms import BlogPostForm
+from django.contrib import messages
+
 
 
 def register(request):
@@ -56,9 +58,13 @@ def submit_report(request):
         form = ReportForm(request.POST, request.FILES)
         if form.is_valid():
             report = form.save(commit=False)
-            report.user = request.user
-            report.save()
-            return redirect('home')
+            report.user = request.user  # Set the user who is submitting the report
+
+            # Set the reporter_name field to the full name of the logged-in user
+            report.reporter_name = f"{request.user.first_name} {request.user.last_name}"
+
+            report.save()  # Now save the report with the reporter's name
+            return redirect('home')  # Redirect to home after successful submission
     else:
         form = ReportForm()
     return render(request, 'reports/submit_report.html', {'form': form})
@@ -66,6 +72,31 @@ def submit_report(request):
 def report_list(request):
     reports = Report.objects.all()
     return render(request, 'reports/report_list.html', {'reports': reports})
+
+def report_detail(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    return render(request, 'reports/report_detail.html', {'report': report})
+
+@login_required
+def report_edit(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    if request.method == "POST":
+        form = ReportForm(request.POST, request.FILES, instance=report)
+        if form.is_valid():
+            form.save()
+            return redirect('report_detail', pk=report.pk)
+        else:
+            messages.error(request, "Form is invalid. Please correct the errors below.")
+            print("Form errors:", form.errors)  # Log errors for debugging
+    else:
+        form = ReportForm(instance=report)
+    return render(request, 'reports/report_edit.html', {'form': form})
+
+@login_required
+def report_delete(request, pk):
+    report = get_object_or_404(Report, pk=pk)
+    report.delete()
+    return redirect('report_list')
 
 def education(request):
     articles = EducationalContent.objects.all().order_by('-date')
@@ -110,21 +141,18 @@ def education(request):
     if request.method == 'POST':
         form = BlogPostForm(request.POST, request.FILES)
         if form.is_valid():
-            # Save the form data to the database
-            form.save()
-            # Redirect to the same page or another page after successful submission
+            blog_post = form.save(commit=False)  # Create a BlogPost instance but don't save it yet
+            blog_post.author = request.user  # Automatically assign the logged-in user as the author
+            blog_post.save()  # Now save it to the database
             return redirect('education')  # Assuming 'education' is the name of the URL
-        else:
-            # If the form is invalid, display errors
-            return render(request, 'reports/education.html', {'form': form})
     else:
-        # Show the empty form for GET requests
         form = BlogPostForm()
-    
+
     # Get all blog posts to display
     articles = BlogPost.objects.all().order_by('-date')  # Assuming you want to order by most recent
 
     return render(request, 'reports/education.html', {'form': form, 'articles': articles})
+
 
 # Blog list view (for education.html)
 def blog_list(request):
@@ -136,3 +164,46 @@ def blog_list(request):
 def blog_detail(request, post_id):
     blog = get_object_or_404(BlogPost, id=post_id)  # Fetch the specific blog post by its ID
     return render(request, 'reports/blog_detail.html', {'blog': blog})
+
+# Edit blog post view (for edit_blog.html)
+@login_required
+def edit_blog(request, post_id):
+    # Get the blog post by ID
+    blog_post = get_object_or_404(BlogPost, id=post_id)
+
+    # Check if the current user is the author of the blog post
+    if blog_post.author != request.user:
+        # Optionally add a message for unauthorized access
+        messages.error(request, "You do not have permission to edit this blog post.")
+        return redirect('blog_detail', post_id=post_id)  # Redirect to the blog detail page
+
+    if request.method == "POST":
+        # Populate the form with POST data for updating
+        form = BlogPostForm(request.POST, request.FILES, instance=blog_post)
+        if form.is_valid():
+            form.save()  # Save the changes
+            messages.success(request, "Blog post updated successfully!")  # Optional success message
+            return redirect('blog_detail', post_id=blog_post.id)  # Redirect to the blog detail page
+    else:
+        # Pre-fill the form with the current blog post data
+        form = BlogPostForm(instance=blog_post)
+
+    context = {
+        'form': form,
+        'blog_post': blog_post
+    }
+    return render(request, 'reports/edit_blog.html', context)
+
+
+@login_required
+def delete_blog(request, id):
+    blog = get_object_or_404(BlogPost, id=id)
+
+    # Ensure that only the author can delete the blog post
+    if request.user == blog.author:
+        blog.delete()
+        messages.success(request, 'Blog post deleted successfully.')
+        return redirect('blog_list')  # Redirect to the blog list after deletion
+    else:
+        messages.error(request, 'You are not authorized to delete this blog post.')
+        return redirect('blog_detail', id=blog.id)
