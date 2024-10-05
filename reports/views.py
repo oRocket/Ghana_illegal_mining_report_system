@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,6 @@ from .models import Report, EducationalContent, BlogPost  # Update import to inc
 from django.contrib.auth.models import User
 from django.db import models  # Add this import at the top of your file
 from .forms import BlogPostForm
-from .models import BlogPost
 
 
 def register(request):
@@ -126,3 +125,14 @@ def education(request):
     articles = BlogPost.objects.all().order_by('-date')  # Assuming you want to order by most recent
 
     return render(request, 'reports/education.html', {'form': form, 'articles': articles})
+
+# Blog list view (for education.html)
+def blog_list(request):
+    blog_posts = BlogPost.objects.all()
+    return render(request, 'reports/blog_list.html', {'blog_posts': blog_posts})
+
+
+# Blog detail view (for blog_detail.html)
+def blog_detail(request, post_id):
+    blog = get_object_or_404(BlogPost, id=post_id)  # Fetch the specific blog post by its ID
+    return render(request, 'reports/blog_detail.html', {'blog': blog})

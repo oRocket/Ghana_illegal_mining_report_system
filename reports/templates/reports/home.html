@@ -39,7 +39,9 @@
             <strong>Title:</strong> {{ blog.title }}<br>
             <strong>Published on:</strong> {{ blog.date_published }}<br>
             <p>{{ blog.content|truncatewords:30 }}</p> <!-- Show first 30 words -->
-            <a href="{% url 'blog_detail' blog.id %}">Read more</a> <!-- Adjust URL as needed -->
+            <a href="{% url 'blog_detail' blog.pk %}">Read More</a>
+            {% comment %} <a href="{% url 'blog_detail' pk=blog.pk %}">Read more {{ blog.title }}</a> {% endcomment %}
+            
         </li>
     {% empty %}
         <li>No blog posts available.</li>

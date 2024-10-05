@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ blog.title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-16 px-4"> <!-- Ensuring enough space from navbar -->
+    <div class="max-w-4xl mx-auto bg-white shadow-md p-8 rounded-lg">
+        <!-- Blog Title -->
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">{{ blog.title }}</h1>
+
+        <!-- Author and Date -->
+        <p class="text-gray-500 mb-6">
+            By <span class="font-medium text-gray-700">{{ blog.author }}</span> | Published on {{ blog.date }}
+        </p>
+
+        <!-- Blog Content -->
+        <div class="prose max-w-none">
+            <p>{{ blog.content }}</p>
+        </div>
+
+        <!-- Blog Images -->
+        {% if blog.images %}
+        <div class="my-8">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Images:</h3>
+            <img src="{{ blog.images.url }}" alt="Blog Image" class="w-full rounded-lg shadow-md">
+        </div>
+        {% endif %}
+
+        <!-- Categories -->
+        {% if blog.categories %}
+        <div class="my-6">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Categories:</h3>
+            <p class="text-gray-600">{{ blog.categories }}</p>
+        </div>
+        {% endif %}
+
+        <!-- References -->
+        {% if blog.references %}
+        <div class="my-6">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">References:</h3>
+            <p class="text-gray-600">{{ blog.references }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Call to Action -->
+        {% if blog.call_to_action %}
+        <div class="my-6">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Call to Action:</h3>
+            <p class="text-blue-600 font-medium">{{ blog.call_to_action }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Contact Information -->
+        {% if blog.contact_info %}
+        <div class="my-6">
+            <h3 class="text-2xl font-semibold text-gray-700 mb-2">Contact Information:</h3>
+            <p class="text-gray-600">{{ blog.contact_info }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Back to Blog List Link -->
+        <div class="mt-8">
+            <a href="{% url 'blog_list' %}" class="text-blue-500 hover:underline font-medium">← Back to All Blogs</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

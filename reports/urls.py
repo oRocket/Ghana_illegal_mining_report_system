@@ -12,6 +12,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('submit/', views.submit_report, name='submit_report'),
     path('dashboard/', views.dashboard, name='dashboard'),  # Add the dashboard URL pattern
+    path('blogs/', views.blog_list, name='blog_list'),
+    path('blogs/<int:post_id>/', views.blog_detail, name='blog_detail'),
 ]
 
 # Serve media files during development

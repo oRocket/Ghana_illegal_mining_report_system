@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Blog Posts{% endblock %}
+
+{% block content %}
+<div class="container mx-auto mt-8 pt-16">
+    <h1 class="text-3xl font-bold mb-8">All Blog Posts</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {% for post in blog_posts %}
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                {% if post.images %}
+                    <img src="{{ post.images.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                {% endif %}
+                <div class="p-6">
+                    <h2 class="text-xl font-bold mb-2">
+                        <a href="{% url 'blog_detail' post.id %}" class="text-blue-500 hover:underline">{{ post.title }}</a>
+                    </h2>
+                    <p class="text-gray-600 mb-4">By {{ post.author }} | Published on {{ post.date }}</p>
+                    <p>{{ post.categories }}</p> <!-- Display categories if present -->
+                    <p class="text-gray-700">{{ post.summary|truncatewords:20 }}</p> <!-- Display summary if available -->
+                    <a href="{% url 'blog_detail' post.id %}" class="text-blue-500 hover:underline mt-4 inline-block">Read More</a>
+                </div>
+            </div>
+        {% empty %}
+            <p>No blog posts available.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

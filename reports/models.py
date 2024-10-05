@@ -31,14 +31,14 @@ class EducationalContent(models.Model):
 class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
-    date = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
-    images = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Adjust the upload_to path as needed
-    categories = models.CharField(max_length=200, blank=True, null=True)  # Consider using a ManyToManyField for categories
+    images = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Optional field for images
+    categories = models.CharField(max_length=100, blank=True, null=True)
     references = models.TextField(blank=True, null=True)
-    summary = models.TextField()
+    summary = models.TextField(blank=True, null=True)
     call_to_action = models.TextField(blank=True, null=True)
-    contact_info = models.CharField(max_length=200, blank=True, null=True)
+    contact_info = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
