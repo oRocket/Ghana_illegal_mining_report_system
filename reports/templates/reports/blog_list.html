@@ -5,7 +5,7 @@
 <div class="container mx-auto mt-8 pt-16">
     <h1 class="text-3xl font-bold mb-8 text-center">All Blog Posts</h1>
 
-    <div class="flex flex-wrap justify-between gap-6 px-4 md:px-6 lg:px-8">
+    <div class="flex flex-wrap justify-between gap-4 px-4 md:px-6 lg:px-8">
         {% for post in blog_posts %}
             <a href="{% url 'blog_detail' post.id %}" class="max-w-sm flex-grow p-6 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 blog-card">
                 {% if post.images %}
