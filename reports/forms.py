@@ -78,6 +78,7 @@ class ReportForm(forms.ModelForm):
             'additional_comments': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Additional Comments (optional)', 'rows': 3}),
         }
 
+
     gps_coordinates = forms.CharField(widget=forms.HiddenInput(), required=False)
     region = forms.ChoiceField(choices=REGION_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
     town = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Town/Community name'}))
@@ -113,37 +114,8 @@ class BlogPostForm(forms.ModelForm):
             'contact_info'
         ]
 
-    mining_type = forms.ChoiceField(choices=MINING_TYPE_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}), required=False)
-    scale = forms.ChoiceField(choices=SCALE_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
-    machinery_used = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Machinery used (e.g., excavators, dredgers)'}))
-
-    mining_method = forms.ChoiceField(choices=METHOD_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
-    environmental_impact = forms.MultipleChoiceField(choices=EFFECT_CHOICES, widget=forms.CheckboxSelectMultiple())
-
-    photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}), required=False)
-    
-    suspected_individuals = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Names of suspected individuals or groups (optional)'}), required=False)
-    num_people_involved = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Number of people involved (optional)'}), required=False)
-
-    reporter_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Your name (optional)'}), required=False)
-    reporter_contact = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Your contact number (optional)'}), required=False)
-    additional_comments = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Any additional comments (optional)', 'rows': 4}), required=False)
-
-
-class BlogPostForm(forms.ModelForm):
-    class Meta:
-        model = BlogPost
-        fields = [
-            'title',
-            'author',
-            'content',
-            'images',
-            'categories',
-            'references',
-            'summary',
-            'call_to_action',
-            'contact_info'
-        ]
-
 class SearchForm(forms.Form):
-    search = forms.CharField(max_length=255, required=True, label='Search by Location')
+    location = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={'placeholder': 'Search by location'})
+    )
