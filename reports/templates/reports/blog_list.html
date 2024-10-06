@@ -3,26 +3,20 @@
 
 {% block content %}
 <div class="container mx-auto mt-8 pt-16">
-    <h1 class="text-3xl font-bold mb-8">All Blog Posts</h1>
+    <h1 class="text-3xl font-bold mb-8 text-center">All Blog Posts</h1>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div class="flex flex-wrap justify-between gap-6 px-4 md:px-6 lg:px-8">
         {% for post in blog_posts %}
-            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <a href="{% url 'blog_detail' post.id %}" class="max-w-sm flex-grow p-6 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 blog-card">
                 {% if post.images %}
-                    <img src="{{ post.images.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                    <img src="{{ post.images.url }}" alt="{{ post.title }}" class="rounded-lg mb-4">  <!-- Use mb-4 to add bottom margin -->
                 {% endif %}
-                <div class="p-6">
-                    <h2 class="text-xl font-bold mb-2">
-                        <a href="{% url 'blog_detail' post.id %}" class="text-blue-500 hover:underline">{{ post.title }}</a>
-                    </h2>
-                    <p class="text-gray-600 mb-4">By <span class="font-semibold text-gray-800">{{ post.full_name }}</span> | Published on {{ post.date|date:"F j, Y" }}</p>
-                    <p>{{ post.categories }}</p> <!-- Display categories if present -->
-                    <p class="text-gray-700">{{ post.summary|truncatewords:20 }}</p> <!-- Display summary if available -->
-                    <a href="{% url 'blog_detail' post.id %}" class="text-blue-500 hover:underline mt-4 inline-block">Read More</a>
-                </div>
-            </div>
+                <h2 class="blog-title mb-2"><strong>Title:</strong> {{ post.title }}</h2>  <!-- Add bottom margin for spacing -->
+                <p class="font-normal text-gray-700 dark:text-gray-400 mb-1"><strong>By:</strong> <span class="font-semibold text-gray-800">{{ post.full_name }}</span> | <strong>Published on:</strong> {{ post.date|date:"F j, Y" }}</p>
+                <p class="font-normal text-gray-700 dark:text-gray-400 mb-1">{{ post.categories }}</p> <!-- Display categories if present -->
+            </a>
         {% empty %}
-            <p>No blog posts available.</p>
+            <p class="text-gray-600 dark:text-gray-400">No blog posts available.</p>
         {% endfor %}
     </div>
 </div>

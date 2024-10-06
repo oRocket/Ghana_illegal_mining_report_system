@@ -3,6 +3,29 @@
 {% block title %}Home - Illegal Mining Report{% endblock %}
 
 {% block content %}
+
+<style>
+    .card {
+        transition: background-color 0.3s ease;
+    }
+
+    .card:hover {
+        background-color: #f0f0f0; /* Light gray as a fallback */
+    }
+
+    /* Blog card styles */
+    .blog-card {
+        transition: background-color 0.3s ease;
+    }
+
+    /* Title styles */
+    .blog-title {
+        font-size: 1.2rem; /* Adjust the size as needed */
+        font-weight: 600; /* Bold */
+        color: #2c3e50; /* Darker shade for contrast */
+    }
+</style>
+
 <div class="relative bg-gradient-to-r from-purple-600 to-blue-600 h-screen text-white overflow-hidden">
   <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.effective-states.org/wp-content/uploads/2017/05/galamsey-ghana-illegal-mining-effective-states-abdulai-manchester2.jpg');">
     <div class="absolute inset-0 bg-black opacity-50"></div>
@@ -11,46 +34,85 @@
   <div class="relative z-10 flex flex-col justify-center items-center h-full text-center">
     <h1 class="text-5xl font-bold leading-tight mb-4">Ghana Illegal Mining Reporting System</h1>
     <p class="text-xl text-gray-300 mb-8">Join us in the fight against illegal mining activities that threaten our environment and communities.</p>
-    <a href="{% url 'register' %}" class="bg-yellow-400 text-gray-900 hover:bg-yellow-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">Get Involved</a> <!-- Updated link to register.html -->
+
+    <!-- Button changes based on user authentication status -->
+    {% if user.is_authenticated %}
+        <a href="{% url 'dashboard' %}" class="bg-yellow-400 text-gray-900 hover:bg-yellow-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            Dashboard
+        </a>
+    {% else %}
+        <a href="{% url 'register' %}" class="bg-yellow-400 text-gray-900 hover:bg-yellow-300 py-2 px-6 rounded-full text-lg font-semibold transition duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg">
+            Get Involved
+        </a>
+    {% endif %}
   </div>
 </div>
 
-<h1>Recent Illegal Mining Incidents</h1>
-<ul>
+<!-- Added margin top here -->
+<h1 class="text-2xl font-bold tracking-tight text-gray-900 mt-10 mb-6 dark:text-white text-center">Recent Illegal Mining Incidents</h1>
+<div class="flex flex-wrap justify-between gap-5 px-4 md:px-6 lg:px-8">
     {% for incident in recent_incidents %}
-        <li>
-            <strong>Location:</strong> {{ incident.location }}<br>
-            <strong>Type:</strong> {{ incident.mining_type }}<br>
-            <strong>Reported on:</strong> {{ incident.date_time }}<br>
-            <strong>Description:</strong> {{ incident.description }}<br>
+        <a href="{% url 'report_detail' incident.pk %}" class="max-w-sm flex-grow p-6 bg-blue-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 card">
+            <p class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Location: {{ incident.town }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Type:</strong> {{ incident.mining_type }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Reported on:</strong> {{ incident.date_time }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Impact(s):</strong> {{ incident.environmental_impact }}</p>
             {% if incident.photo %}
-                <img src="{{ incident.photo.url }}" alt="Incident Photo" style="max-width: 200px;"><br>
+                <img src="{{ incident.photo.url }}" alt="Incident Photo" class="mt-2 rounded-lg max-w-xs">
             {% endif %}
-        </li>
+        </a>
     {% empty %}
-        <li>No recent incidents reported.</li>
+        <p class="text-gray-600 dark:text-gray-400">No recent incidents reported.</p>
     {% endfor %}
-</ul>
+</div>
 
-<h1>Latest Blog Posts on Illegal Mining</h1>
-<ul>
+<h1 class="text-2xl font-bold tracking-tight text-gray-900 mt-10 mb-6 dark:text-white text-center">Latest Blog Posts on Illegal Mining</h1>
+<div class="flex flex-wrap justify-center gap-4 px-2 md:px-4 lg:px-8">
     {% for blog in recent_blogs %}
-        <li>
-            <strong>Title:</strong> {{ blog.title }}<br>
-            <strong>Published on:</strong> {{ blog.date_published }}<br>
-            <p>{{ blog.content|truncatewords:30 }}</p> <!-- Show first 30 words -->
-            <a href="{% url 'blog_detail' blog.pk %}">Read More</a>
-            {% comment %} <a href="{% url 'blog_detail' pk=blog.pk %}">Read more {{ blog.title }}</a> {% endcomment %}
-            
-        </li>
+        <a href="{% url 'blog_detail' blog.pk %}" class="max-w-sm flex-grow p-4 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 blog-card">
+            <p class="blog-title"><strong>Title:</strong> {{ blog.title }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Published on:</strong> {{ blog.date_published }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400">{{ blog.content|truncatewords:30 }}</p>
+        </a>
     {% empty %}
-        <li>No blog posts available.</li>
+        <p class="text-gray-600 dark:text-gray-400">No blog posts available.</p>
     {% endfor %}
-</ul>
+</div>
+
 
 <footer class="bg-white shadow mt-6">
     <div class="max-w-6xl mx-auto px-4 py-4">
         <p class="text-center">&copy; 2024 Illegal Mining Reports</p>
     </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const reportCards = document.querySelectorAll('.card');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        reportCards.forEach(card => {
+            card.addEventListener('mouseover', function() {
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                card.style.backgroundColor = randomColor;
+            });
+
+            card.addEventListener('mouseout', function() {
+                card.style.backgroundColor = ''; // Reset to default
+            });
+        });
+
+        blogCards.forEach(card => {
+            card.addEventListener('mouseover', function() {
+                const randomColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                card.style.backgroundColor = randomColor;
+            });
+
+            card.addEventListener('mouseout', function() {
+                card.style.backgroundColor = ''; // Reset to default
+            });
+        });
+    });
+</script>
+
 {% endblock %}

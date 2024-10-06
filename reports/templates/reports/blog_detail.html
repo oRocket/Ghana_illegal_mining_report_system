@@ -13,22 +13,15 @@
             By <span class="font-semibold text-gray-800">{{ blog.full_name }}</span> | Published on {{ blog.date|date:"F j, Y" }}
         </p>
 
+        <!-- Blog Image (similar to blog_list.html) -->
+        {% if blog.images %}
+            <img src="{{ blog.images.url }}" alt="{{ blog.title }}" class="w-full h-80 object-cover mb-8">
+        {% endif %}
+
         <!-- Blog Content -->
         <div class="prose max-w-none mb-8">
             <p>{{ blog.content }}</p>
         </div>
-
-        <!-- Blog Images -->
-        {% if blog.images %}
-        <div class="my-8">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Images:</h3> <!-- Reduced to text-2xl -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {% for image in blog.images.all %}
-                    <img src="{{ image.url }}" alt="Blog Image" class="w-full h-auto rounded-lg shadow-md">
-                {% endfor %}
-            </div>
-        </div>
-        {% endif %}
 
         <!-- Categories -->
         {% if blog.categories %}
@@ -62,14 +55,6 @@
         </div>
         {% endif %}
 
-        {% if messages %}
-            <ul class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-
         <div class="mt-8 flex justify-between">
             <!-- Edit Blog Button -->
             <a href="{% url 'edit_blog' blog.id %}" class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300">
@@ -87,7 +72,6 @@
             </form>
             {% endif %}
         </div>
-        
 
         <!-- Back to Blog List Link -->
         <div class="mt-8">
@@ -95,5 +79,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
