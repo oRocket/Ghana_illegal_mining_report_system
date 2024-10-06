@@ -36,7 +36,6 @@ class Report(models.Model):
     def __str__(self):
         return f"{self.location} - {self.mining_type}"
 
-
 class EducationalContent(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()

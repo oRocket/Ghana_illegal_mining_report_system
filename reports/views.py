@@ -9,7 +9,6 @@ from django.db import models  # Add this import at the top of your file
 from .forms import BlogPostForm
 from django.contrib import messages
 
-
 def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -20,7 +19,6 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'reports/register.html', {'form': form})
-
 
 def login_view(request):
     if request.method == 'POST':
@@ -45,7 +43,6 @@ def login_view(request):
             return render(request, 'reports/login.html', {'error': 'Invalid credentials'})  # Updated path
     
     return render(request, 'reports/login.html')  # Updated path
-
 
 def logout_view(request):
     logout(request)
@@ -75,7 +72,6 @@ def report_list(request):
 def report_list(request):
     reports = Report.objects.all().order_by('-date_time')  # Order by date_submitted in descending order
     return render(request, 'reports/report_list.html', {'reports': reports})
-
 
 def report_detail(request, pk):
     report = get_object_or_404(Report, pk=pk)
@@ -109,11 +105,11 @@ def education(request):
 def home(request):
     recent_incidents = Report.objects.all().order_by('-date_time')[:6]  # Fetch latest 6 incidents
     recent_blogs = BlogPost.objects.all().order_by('-date')[:6]  # Fetch latest 6 blogs
+
     return render(request, 'reports/home.html', {
         'recent_incidents': recent_incidents,
         'recent_blogs': recent_blogs,
     })
-
 
 @login_required
 def dashboard(request):
@@ -126,6 +122,7 @@ def dashboard(request):
         recent_reports = Report.objects.all().order_by('-date_time')[:6]
 
     recent_blogs = BlogPost.objects.all().order_by('-date')[:4]  # Change to '-date' instead of '-date_published'
+
 
     # Statistics
     total_reports = Report.objects.count()
@@ -140,7 +137,6 @@ def dashboard(request):
         'most_affected_areas': most_affected_areas,
         'search_form': search_form,  # Ensure this line is present
     })
-
 
 def education(request):
     if request.method == 'POST':
@@ -158,12 +154,10 @@ def education(request):
 
     return render(request, 'reports/education.html', {'form': form, 'articles': articles})
 
-
 # Blog list view (for education.html)
 def blog_list(request):
     blog_posts = BlogPost.objects.all().order_by('-date')
     return render(request, 'reports/blog_list.html', {'blog_posts': blog_posts})
-
 
 # Blog detail view (for blog_detail.html)
 def blog_detail(request, post_id):
