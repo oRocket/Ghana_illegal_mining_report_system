@@ -49,6 +49,12 @@ EFFECT_CHOICES = [
     ('Land degradation', 'Land degradation')
 ]
 
+STATUS_CHOICES = [
+    ('pending', 'Pending'),
+    ('resolved', 'Resolved'),
+    ('rejected', 'Rejected'),
+]
+
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
@@ -57,7 +63,7 @@ class ReportForm(forms.ModelForm):
             'mining_type', 'scale', 'machinery_used', 'mining_method', 
             'environmental_impact', 'photo', 'suspected_individuals', 
             'num_people_involved', 'reporter_name', 'reporter_contact', 
-            'additional_comments'
+            'additional_comments', 'status'
         ]
 
         widgets = {
@@ -76,8 +82,8 @@ class ReportForm(forms.ModelForm):
             'reporter_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Name (optional)'}),
             'reporter_contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Contact Number (optional)'}),
             'additional_comments': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Additional Comments (optional)', 'rows': 3}),
+            'status': forms.Select(choices=STATUS_CHOICES, attrs={'class': 'form-select'})  # Add widget for 'status'
         }
-
 
     gps_coordinates = forms.CharField(widget=forms.HiddenInput(), required=False)
     region = forms.ChoiceField(choices=REGION_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
@@ -99,6 +105,10 @@ class ReportForm(forms.ModelForm):
     reporter_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Your name (optional)'}), required=False)
     reporter_contact = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Your contact number (optional)'}), required=False)
     additional_comments = forms.CharField(widget=forms.Textarea(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Any additional comments (optional)', 'rows': 4}), required=False)
+    
+    # Add status field with choices
+    status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
+
 
 class BlogPostForm(forms.ModelForm):
     class Meta:

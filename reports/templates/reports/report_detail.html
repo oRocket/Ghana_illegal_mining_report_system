@@ -4,73 +4,96 @@
 {% block title %}Report Details{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gray-100 pt-16"> <!-- Add padding-top for the fixed navbar -->
-    <div class="container mx-auto p-4 flex flex-col md:flex-row md:space-x-8">
+<div class="min-h-screen bg-gray-100 pt-16">
+    <!-- Main Container -->
+    <div class="container mx-auto px-4 md:px-8 py-8 md:flex md:space-x-8">
         
         <!-- Main Content Section -->
-        <div class="bg-white shadow-md rounded-lg p-6 flex-1">
-            <h4 class="text-3xl font-bold text-center mb-6">Report Details</h4>
+        <div class="bg-white shadow-lg rounded-lg p-6 md:flex-1">
+            <h4 class="text-3xl font-extrabold text-center text-gray-800 mb-6">Report Details</h4>
 
-            <h3 class="text-xl font-bold mb-4">Location Information</h3>
-            <p><strong>GPS Coordinates:</strong> {{ report.gps_coordinates }}</p>
-            <p><strong>Region:</strong> {{ report.region }}</p>
-            <p><strong>Town/Community Name:</strong> {{ report.town }}</p>
-            <p><strong>Nearby Landmarks:</strong> {{ report.landmarks|default:"N/A" }}</p>
+            <!-- Location Information -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Location Information</h3>
+                <p><strong>GPS Coordinates:</strong> {{ report.gps_coordinates }}</p>
+                <p><strong>Region:</strong> {{ report.region }}</p>
+                <p><strong>Town/Community Name:</strong> {{ report.town }}</p>
+                <p><strong>Nearby Landmarks:</strong> {{ report.landmarks|default:"N/A" }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Nature of the Mining Activity</h3>
-            <p><strong>Type of Mining:</strong> {{ report.mining_type|default:"N/A" }}</p>
-            <p><strong>Scale of Operation:</strong> {{ report.scale }}</p>
-            <p><strong>Machinery Used:</strong> {{ report.machinery_used }}</p>
-            <p><strong>Method of Mining:</strong> {{ report.mining_method }}</p>
+            <!-- Nature of the Mining Activity -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Nature of the Mining Activity</h3>
+                <p><strong>Type of Mining:</strong> {{ report.mining_type|default:"N/A" }}</p>
+                <p><strong>Scale of Operation:</strong> {{ report.scale }}</p>
+                <p><strong>Machinery Used:</strong> {{ report.machinery_used }}</p>
+                <p><strong>Method of Mining:</strong> {{ report.mining_method }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Environmental Impact</h3>
-            <p><strong>Effects:</strong> {{ report.environmental_impact }}</p>
+            <!-- Environmental Impact -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Environmental Impact</h3>
+                <p><strong>Effects:</strong> {{ report.environmental_impact }}</p>
+            </div>
 
+            <!-- Uploaded Photo -->
             {% if report.photo %}
-            <h3 class="text-xl font-bold mb-4 mt-6">Uploaded Photo</h3>
-            <img src="{{ report.photo.url }}" alt="Report Photo" class="rounded-lg mb-4 max-w-full h-auto">
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Uploaded Photo</h3>
+                <img src="{{ report.photo.url }}" alt="Report Photo" class="rounded-lg mb-4 max-w-full h-auto shadow-md">
+            </div>
             {% endif %}
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Suspected Individuals</h3>
-            <p><strong>Names:</strong> {{ report.suspected_individuals|default:"N/A" }}</p>
-            <p><strong>Number of People Involved:</strong> {{ report.num_people_involved|default:"N/A" }}</p>
+            <!-- Suspected Individuals -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Suspected Individuals</h3>
+                <p><strong>Names:</strong> {{ report.suspected_individuals|default:"N/A" }}</p>
+                <p><strong>Number of People Involved:</strong> {{ report.num_people_involved|default:"N/A" }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Personal Information</h3>
-            <p><strong>Your Name:</strong> {{ report.reporter_name|default:"N/A" }}</p>
-            <p><strong>Your Contact Number:</strong> {{ report.reporter_contact|default:"N/A" }}</p>
+            <!-- Personal Information -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Personal Information</h3>
+                <p><strong>Your Name:</strong> {{ report.reporter_name|default:"N/A" }}</p>
+                <p><strong>Your Contact Number:</strong> {{ report.reporter_contact|default:"N/A" }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Additional Comments</h3>
-            <p>{{ report.additional_comments|default:"N/A" }}</p>
+            <!-- Additional Comments -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Additional Comments</h3>
+                <p>{{ report.additional_comments|default:"N/A" }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Submission Date</h3>
-            <p>{{ report.date_time }}</p>
+            <!-- Submission Date -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Submission Date</h3>
+                <p>{{ report.date_time }}</p>
+            </div>
 
-            <h3 class="text-xl font-bold mb-4 mt-6">Status</h3>
-            <p>{{ report.get_status_display }}</p>
+            <!-- Status -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Status</h3>
+                <p>{{ report.get_status_display }}</p>
+            </div>
 
-            <div class="mt-6 text-center">
-                <a href="{% url 'report_list' %}" class="text-blue-500 hover:underline">Back to Reports</a>
+            <!-- Back to Reports -->
+            <div class="mt-8 text-center">
+                <a href="{% url 'report_list' %}" class="text-lg text-blue-600 font-semibold hover:text-blue-700">← Back to Reports</a>
             </div>
         </div>
 
-        <!-- Sidebar for additional info or actions -->
-        <div class="hidden md:block md:w-1/3">
-            <div class="bg-white shadow-md rounded-lg p-6 mb-6">
-                <h4 class="text-xl font-bold mb-4">Action Items</h4>
-                <ul class="space-y-2">
-                    <li><a href="{% url 'report_edit' report.id %}" class="text-blue-500 hover:underline">Edit Report</a></li>
-                    <li><a href="{% url 'report_delete' report.id %}" class="text-red-500 hover:underline">Delete Report</a></li>
-                    <li><a href="{% url 'report_list' %}" class="text-blue-500 hover:underline">View All Reports</a></li>
+        <!-- Sidebar for additional actions -->
+        <div class="hidden md:block md:w-1/3 space-y-6">
+            <div class="bg-white shadow-lg rounded-lg p-6">
+                <h4 class="text-xl font-bold text-gray-700 mb-4">Action Items</h4>
+                <ul class="space-y-3">
+                    <li><a href="{% url 'report_edit' report.id %}" class="text-blue-600 font-semibold hover:underline">Edit Report</a></li>
+                    <li><a href="{% url 'report_delete' report.id %}" class="text-red-600 font-semibold hover:underline">Delete Report</a></li>
+                    <li><a href="{% url 'report_list' %}" class="text-blue-600 font-semibold hover:underline">View All Reports</a></li>
                 </ul>
             </div>
-            {% comment %} <div class="bg-white shadow-md rounded-lg p-6">
-                <h4 class="text-xl font-bold mb-4">Helpful Links</h4>
-                <ul class="space-y-2">
-                    <li><a href="{% url 'educational_resources' %}" class="text-blue-500 hover:underline">Educational Resources</a></li>
-                    <li><a href="{% url 'reporting_guidelines' %}" class="text-blue-500 hover:underline">Reporting Guidelines</a></li>
-                </ul>
-            </div> {% endcomment %}
         </div>
+
     </div>
 </div>
 {% endblock %}

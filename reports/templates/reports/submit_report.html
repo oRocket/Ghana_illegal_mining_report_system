@@ -9,7 +9,7 @@
 
         <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
             {% csrf_token %}
-            
+
             <!-- Location Information -->
             <h3 class="text-xl font-bold text-center mb-4">Location Information</h3>
             <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -61,7 +61,6 @@
             </div>
             <br><br>
 
-
             <!-- Environmental Impact -->
             <h3 class="text-xl font-bold text-center mb-4">Environmental Impact</h3>
             <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -80,7 +79,6 @@
                 </div>
             </div>
             <br><br>
-
 
             <!-- Suspected Individuals -->
             <h3 class="text-xl font-bold text-center mb-4">Suspected Individuals</h3>
@@ -117,6 +115,15 @@
                 {{ form.additional_comments }}
             </div>
 
+            <!-- Status Field -->
+            <h3 class="text-xl font-bold text-center mb-4">Report Status</h3>
+            <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="id_status" class="block text-gray-700 font-bold mb-2">Status</label>
+                    {{ form.status }}  <!-- Render the status field -->
+                </div>
+            </div>
+
             <!-- Submit Button -->
             <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 rounded mt-4">
                 Submit Report
@@ -140,9 +147,8 @@
         }
     }
 
-    // Automatically call getLocation on page load
-    window.onload = function() {
-        getLocation();
-    };
+    // Call the getLocation function on page load
+    window.onload = getLocation;
 </script>
+
 {% endblock %}

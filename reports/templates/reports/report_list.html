@@ -7,7 +7,7 @@
 
     <div class="flex flex-wrap justify-between gap-4 px-4 md:px-6 lg:px-8">
         {% for report in reports %}
-            <div class="max-w-sm flex-grow p-6 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 report-card">
+            <div class="max-w-sm flex-grow p-6 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 report-card transition-transform transform hover:scale-105 hover:shadow-lg">
                 <!-- Card Image -->
                 {% if report.images %}
                     <img src="{{ report.images.url }}" alt="{{ report.title }}" class="mt-2 rounded-lg max-w-xs">
@@ -20,6 +20,17 @@
                 <!-- Environmental Impact Summary -->
                 <p class="font-normal text-gray-700 dark:text-gray-400 mb-4">
                     Environmental Impact: {{ report.environmental_impact }}
+                </p>
+                <!-- Report Status -->
+                <p class="font-bold text-sm mb-4">
+                    Status: 
+                    {% if report.status == 'pending' %}
+                        <span class="text-yellow-500">Pending</span>
+                    {% elif report.status == 'resolved' %}
+                        <span class="text-green-500">Resolved</span>
+                    {% elif report.status == 'rejected' %}
+                        <span class="text-red-500">Rejected</span>
+                    {% endif %}
                 </p>
                 <!-- Button to View Report Details -->
                 <a href="{% url 'report_detail' report.id %}" class="bg-blue-500 text-white px-2 py-1 text-sm rounded hover:bg-blue-700 transition duration-300"> <!-- Reduced padding and font size -->

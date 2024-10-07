@@ -54,13 +54,12 @@ def submit_report(request):
         form = ReportForm(request.POST, request.FILES)
         if form.is_valid():
             report = form.save(commit=False)
-            report.user = request.user  # Set the user who is submitting the report
-
-            # Set the reporter_name field to the full name of the logged-in user
+            report.user = request.user
             report.reporter_name = f"{request.user.first_name} {request.user.last_name}"
-
-            report.save()  # Now save the report with the reporter's name
-            return redirect('home')  # Redirect to home after successful submission
+            report.save()
+            return redirect('home')
+        else:
+            print(form.errors)  # Log form errors for debugging
     else:
         form = ReportForm()
     return render(request, 'reports/submit_report.html', {'form': form})
