@@ -1,13 +1,9 @@
 {
-    "builds": [{
-        "src": "illegal_mining_report/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
+    "builds": [
+      { "src": "manage.py", "use": "@vercel/python" }
+    ],
     "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "illegal_mining_report/wsgi.py"
-        }
+      { "src": "/(.*)", "dest": "manage.py" }
     ]
-}
+  }
+  
