@@ -7,24 +7,23 @@ class Report(models.Model):
     gps_coordinates = models.CharField(max_length=100)
     region = models.CharField(max_length=100)
     town = models.CharField(max_length=100)
-    landmarks = models.CharField(max_length=255, blank=True, null=True)  # Optional
+    landmarks = models.CharField(max_length=255, blank=True, null=True)
 
-    mining_type = models.CharField(max_length=100, blank=True, null=True)  # Optional
+    mining_type = models.CharField(max_length=100, blank=True, null=True)
     scale = models.CharField(max_length=50)
-    machinery_used = models.CharField(max_length=255, blank=True, null=True)  # Optional
-    mining_method = models.CharField(max_length=100, blank=True, null=True)  # Missing field
+    machinery_used = models.CharField(max_length=255, blank=True, null=True)
+    mining_method = models.CharField(max_length=100, blank=True, null=True)
     
     environmental_impact = models.CharField(max_length=255)
-    # environmental_impact = models.CharField(max_length=255, blank=True, null=True)  # Missing field
     description = models.TextField()
     photo = models.ImageField(upload_to='reports_photos/', blank=True, null=True)
     date_time = models.DateTimeField(auto_now_add=True)
     
-    suspected_individuals = models.CharField(max_length=255, blank=True, null=True)  # Missing field
-    num_people_involved = models.IntegerField(blank=True, null=True)  # Missing field
-    reporter_name = models.CharField(max_length=100, blank=True, null=True)  # Missing field
-    reporter_contact = models.CharField(max_length=100, blank=True, null=True)  # Already exists
-    additional_comments = models.TextField(blank=True, null=True)  # Missing field
+    suspected_individuals = models.CharField(max_length=255, blank=True, null=True)
+    num_people_involved = models.IntegerField(blank=True, null=True)
+    reporter_name = models.CharField(max_length=100, blank=True, null=True)
+    reporter_contact = models.CharField(max_length=100, blank=True, null=True)
+    additional_comments = models.TextField(blank=True, null=True)
 
     STATUS_CHOICES = [
         ('pending', 'Pending'),
@@ -48,7 +47,7 @@ class BlogPost(models.Model):
     title = models.CharField(max_length=200)
     author = models.ForeignKey(User, on_delete=models.CASCADE)  # Store reference to User
     content = models.TextField()
-    images = models.ImageField(upload_to='blog_images/', blank=True, null=True)  # Optional field for images
+    images = models.ImageField(upload_to='blog_images/', blank=True, null=True)
     categories = models.CharField(max_length=100, blank=True, null=True)
     references = models.TextField(blank=True, null=True)
     summary = models.TextField(blank=True, null=True)

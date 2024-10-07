@@ -96,17 +96,16 @@
             <p class="mb-2"><strong>Resolved Cases:</strong> {{ resolved_cases }}</p>
         </div>
 
-        <!-- Most Affected Areas Section -->
         <div class="section w-full md:w-1/2">
-            <h3>Most Affected Areas</h3>
+            <h3>Most Affected Regions</h3>
             <ul class="list-disc">
-                {% for area in most_affected_areas %}
+                {% for region in most_affected_regions %}
                     <li class="mb-2 text-gray-700">
-                        <span class="font-bold">{{ area.location }}</span>
-                        <span class="text-sm text-gray-500">- {{ area.count }} reports</span>
+                        <span class="font-bold">{{ region.region }}</span>
+                        <span class="text-sm text-gray-500">- {{ region.count }} reports</span>
                     </li>
                 {% empty %}
-                    <li class="text-gray-500">No affected areas found.</li>
+                    <li class="text-gray-500">No affected regions found.</li>
                 {% endfor %}
             </ul>
         </div>

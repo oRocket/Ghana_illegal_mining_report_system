@@ -48,7 +48,6 @@
   </div>
 </div>
 
-<!-- Added margin top here -->
 <h1 class="text-2xl font-bold tracking-tight text-gray-900 mt-10 mb-6 dark:text-white text-center">Recent Illegal Mining Incidents</h1>
 <div class="flex flex-wrap justify-between gap-5 px-4 md:px-6 lg:px-8">
     {% for incident in recent_incidents %}
@@ -58,7 +57,7 @@
             <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Reported on:</strong> {{ incident.date_time }}</p>
             <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Impact(s):</strong> {{ incident.environmental_impact }}</p>
             {% if incident.photo %}
-                <img src="{{ incident.photo.url }}" alt="Incident Photo" class="mt-2 rounded-lg max-w-xs">
+                <img src="{{ incident.photo.url }}" alt="Incident Photo" class="mt-2 rounded-lg" style="width: 100%; height: 200px; object-fit: cover;">
             {% endif %}
         </a>
     {% empty %}
@@ -71,7 +70,7 @@
     {% for blog in recent_blogs %}
         <a href="{% url 'blog_detail' blog.pk %}" class="max-w-sm flex-grow p-4 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 blog-card">
             <p class="blog-title"><strong>Title:</strong> {{ blog.title }}</p>
-            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Published on:</strong> {{ blog.date_published }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Published on:</strong> {{ blog.date|date:"F j, Y" }}</p>
             <p class="font-normal text-gray-700 dark:text-gray-400">{{ blog.content|truncatewords:30 }}</p>
         </a>
     {% empty %}
@@ -79,11 +78,95 @@
     {% endfor %}
 </div>
 
-<footer class="bg-white shadow mt-6">
-    <div class="max-w-6xl mx-auto px-4 py-4">
-        <p class="text-center">&copy; 2024 Illegal Mining Reports</p>
+<h1 class="text-2xl font-bold tracking-tight text-gray-900 mt-10 mb-6 dark:text-white text-center">Why Ghana Illegal Mining Report System (GIMRS)?</h1>
+<div class="flex flex-wrap justify-center gap-5 px-4 mb-10 md:px-6 lg:px-8">
+    <div class="max-w-sm flex-grow p-6 bg-yellow-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <h2 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Protecting the Environment</h2>
+        <p class="font-normal text-gray-700 dark:text-gray-400">Our system helps identify and report illegal mining activities, contributing to environmental preservation and biodiversity.</p>
     </div>
+    <div class="max-w-sm flex-grow p-6 bg-yellow-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <h2 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Community Safety</h2>
+        <p class="font-normal text-gray-700 dark:text-gray-400">By reporting illegal mining, we safeguard communities from the dangers associated with unregulated mining practices.</p>
+    </div>
+    <div class="max-w-sm flex-grow p-6 bg-yellow-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <h2 class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Promoting Sustainable Practices</h2>
+        <p class="font-normal text-gray-700 dark:text-gray-400">We encourage sustainable mining practices that benefit local economies while preserving our natural resources for future generations.</p>
+    </div>
+</div>
+
+
+<footer class="relative bg-blueGray-200 pt-8 pb-6">
+  <div class="container mx-auto px-4">
+    <div class="flex flex-wrap text-left lg:text-left">
+      <div class="w-full lg:w-6/12 px-4">
+        <h4 class="text-3xl font-semibold text-blueGray-700">Let's keep in touch!</h4>
+        <h5 class="text-lg mt-0 mb-2 text-blueGray-600">
+          Find us on any of these platforms.
+        </h5>
+        <div class="mt-6 lg:mb-0 mb-6 flex space-x-2">
+            <a href="https://x.com/@Albert_O_T" target="_blank" class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 flex items-center justify-center rounded-full outline-none focus:outline-none">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://facebook.com/YourPage" target="_blank" class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 flex items-center justify-center rounded-full outline-none focus:outline-none">
+              <i class="fab fa-facebook-square"></i>
+            </a>
+            <a href="https://dribbble.com/YourProfile" target="_blank" class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 flex items-center justify-center rounded-full outline-none focus:outline-none">
+              <i class="fab fa-dribbble"></i>
+            </a>
+            <a href="https://github.com/oRocket" target="_blank" class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 flex items-center justify-center rounded-full outline-none focus:outline-none">
+              <i class="fab fa-github"></i>
+            </a>
+        </div>
+          
+      </div>
+      <div class="w-full lg:w-6/12 px-4">
+        <div class="flex flex-wrap items-top mb-6">
+          <div class="w-full lg:w-4/12 px-4 ml-auto">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Useful Links</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="#">About Us</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="{% url 'blog_list' %}">Blog</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="{% url 'report_list' %}">Reports</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="#">Resources</a>
+              </li>
+            </ul>
+          </div>
+          <div class="w-full lg:w-4/12 px-4">
+            <span class="block uppercase text-blueGray-500 text-sm font-semibold mb-2">Other Resources</span>
+            <ul class="list-unstyled">
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="#">Terms &amp; Conditions</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="#">Privacy Policy</a>
+              </li>
+              <li>
+                <a class="text-blueGray-600 hover:text-blueGray-800 font-semibold block pb-2 text-sm" href="#">Contact Us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="my-6 border-blueGray-300">
+    <div class="flex flex-wrap items-center md:justify-between justify-center">
+      <div class="w-full md:w-4/12 px-4 mx-auto text-center">
+        <div class="text-sm text-blueGray-500 font-semibold py-1">
+          Copyright © <span id="get-current-year">{{ current_year }}</span>
+          <a href="#" class="text-blueGray-500 hover:text-gray-800"> Illegal Mining Report System.</a>
+        </div>
+      </div>
+    </div>
+  </div>
 </footer>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

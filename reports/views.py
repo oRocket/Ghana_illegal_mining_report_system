@@ -8,6 +8,9 @@ from django.contrib.auth.models import User
 from django.db import models  # Add this import at the top of your file
 from .forms import BlogPostForm
 from django.contrib import messages
+from datetime import datetime
+from django.db.models import Count
+
 
 def register(request):
     if request.method == 'POST':
@@ -104,10 +107,12 @@ def education(request):
 def home(request):
     recent_incidents = Report.objects.all().order_by('-date_time')[:6]  # Fetch latest 6 incidents
     recent_blogs = BlogPost.objects.all().order_by('-date')[:6]  # Fetch latest 6 blogs
+    current_year = datetime.now().year
 
     return render(request, 'reports/home.html', {
         'recent_incidents': recent_incidents,
         'recent_blogs': recent_blogs,
+        'current_year': current_year,
     })
 
 @login_required
@@ -122,11 +127,23 @@ def dashboard(request):
 
     recent_blogs = BlogPost.objects.all().order_by('-date')[:4]  # Change to '-date' instead of '-date_published'
 
-
     # Statistics
     total_reports = Report.objects.count()
     resolved_cases = Report.objects.filter(status='resolved').count()  # Adjust based on your status field
     most_affected_areas = Report.objects.values('location').annotate(count=models.Count('id')).order_by('-count')[:3]
+
+    # Most affected regions logic
+    most_affected_regions = (
+        Report.objects.values('region')
+        .annotate(count=Count('id'))
+        .order_by('-count')[:5]
+    )
+
+    # Debugging output
+    print("Most Affected Regions:", most_affected_regions)
+
+    # Find the region with the maximum reports
+    top_region = most_affected_regions.first() if most_affected_regions else None
 
     return render(request, 'reports/dashboard.html', {
         'recent_reports': recent_reports,
@@ -134,8 +151,11 @@ def dashboard(request):
         'total_reports': total_reports,
         'resolved_cases': resolved_cases,
         'most_affected_areas': most_affected_areas,
+        'most_affected_regions': most_affected_regions,  # Include this
+        'top_region': top_region,  # Include this if needed
         'search_form': search_form,  # Ensure this line is present
     })
+
 
 def education(request):
     if request.method == 'POST':

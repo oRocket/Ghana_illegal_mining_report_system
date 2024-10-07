@@ -82,7 +82,7 @@ class ReportForm(forms.ModelForm):
             'reporter_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Name (optional)'}),
             'reporter_contact': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Your Contact Number (optional)'}),
             'additional_comments': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Additional Comments (optional)', 'rows': 3}),
-            'status': forms.Select(choices=STATUS_CHOICES, attrs={'class': 'form-select'})  # Add widget for 'status'
+            'status': forms.Select(choices=STATUS_CHOICES, attrs={'class': 'form-select'})
         }
 
     gps_coordinates = forms.CharField(widget=forms.HiddenInput(), required=False)
