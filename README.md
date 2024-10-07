@@ -58,3 +58,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Thanks to the Django community for their extensive documentation and support.
 - Special thanks to everyone who contributed to the development of this project.
 
+## Pitch Deck
+- For more information, view the pitch deck [here](https://gamma.app/docs/Ghana-Illegal-Mining-Reporting-System-xc8q3wcc91ektxh).
