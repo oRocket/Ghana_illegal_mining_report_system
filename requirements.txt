@@ -1,5 +1,0 @@
-Django>=3.2,<4.0
-djangorestframework>=3.12,<4.0
-Pillow>=8.0,<9.0
-python-dotenv>=0.15,<1.0
-django-crispy-forms>=1.11,<2.0
