@@ -1,12 +1,7 @@
 asgiref==3.8.1
-<<<<<<< HEAD
-Django==5.1.1
-=======
 Django==4.2.16
->>>>>>> 8cb53fd526ce5f2e5d163cb9faa9d35a2e490227
 gunicorn==23.0.0
 packaging==24.1
 pillow==10.4.0
 sqlparse==0.5.1
 tzdata==2024.2
-whitenoise==6.7.0
