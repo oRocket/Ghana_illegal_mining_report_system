@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-from decouple import config
+# from decouple import config
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,10 +27,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Adjust the path as necessary
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+
+# Access environment variables
+SECRET_KEY = os.getenv('SECRET_KEY')
+DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)  # Convert to boolean
+# DEBUG = config('DEBUG', default=False, cast=bool)  # Convert to boolean
 
 ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1"]
 # ALLOWED_HOSTS = ['*']
