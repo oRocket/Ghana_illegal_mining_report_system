@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Install dependencies using full path to pip
-C:/Users/Albert/Documents/DJANGO\ PROJECT/SOCIAL\ JUSTICE\ HACKATHON/venv/Scripts/pip.exe install -r requirements.txt
+# Use the full path to Python executable from the virtual environment
+C:/Users/Albert/Documents/DJANGO\ PROJECT/SOCIAL\ JUSTICE\ HACKATHON/venv/Scripts/python.exe -m pip install -r requirements.txt
 
 # Collect static files for Django
-python manage.py collectstatic --noinput
+C:/Users/Albert/Documents/DJANGO\ PROJECT/SOCIAL\ JUSTICE\ HACKATHON/venv/Scripts/python.exe manage.py collectstatic --noinput
