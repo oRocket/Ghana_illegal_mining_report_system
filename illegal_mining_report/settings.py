@@ -32,8 +32,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)  # Convert to boolean
 
-ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh"]
-
+ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1"]
+# ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -89,27 +89,27 @@ WSGI_APPLICATION = 'illegal_mining_report.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql_psycopg2",
-#         "NAME": os.environ.get("DB_NAME"),
-#         "USER": os.environ.get("DB_USER"),
-#         "PASSWORD": os.environ.get("DB_PASSWORD"),
-#         "HOST": os.environ.get("DB_HOST"),
-#         "PORT": os.environ.get("DB_PORT"),
-#     }
-# }
-
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": os.environ.get("DB_NAME"),
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": os.environ.get("DB_HOST"),
+        "PORT": os.environ.get("DB_PORT"),
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': config('DB_NAME'),
+#         'USER': config('DB_USER'),
+#         'PASSWORD': config('DB_PASSWORD'),
+#         'HOST': config('DB_HOST'),
+#         'PORT': config('DB_PORT'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -150,7 +150,8 @@ USE_TZ = True
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 STATIC_URL = "static/"
 # STATIC_ROOT = BASE_DIR/'assets'
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
