@@ -27,10 +27,10 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Adjust the path as necessary
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n9)epi&+mqhr3q82!ag38#!6$5=zw8+wc23&u@8$!jw2^cb7&='
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)  # Convert to boolean
 
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app", ".now.sh"]
 
