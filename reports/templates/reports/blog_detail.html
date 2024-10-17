@@ -18,9 +18,9 @@
             <img src="{{ blog.images.url }}" alt="{{ blog.title }}" class="w-full h-80 object-cover mb-8">
         {% endif %}
 
-        <!-- Blog Content -->
+        <!-- Blog Content with TinyMCE rich text support -->
         <div class="prose max-w-none mb-8">
-            <p>{{ blog.content }}</p>
+            <p>{{ blog.content|safe }}</p> <!-- Using the 'safe' filter to render HTML content -->
         </div>
 
         <!-- Categories -->
@@ -35,7 +35,7 @@
         {% if blog.references %}
         <div class="my-6">
             <h3 class="text-2xl font-semibold text-gray-800 mb-2">References:</h3> <!-- Reduced to text-2xl -->
-            <p class="text-gray-700">{{ blog.references }}</p>
+            <p class="text-gray-700">{{ blog.references|safe }}</p>
         </div>
         {% endif %}
 

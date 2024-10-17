@@ -3,6 +3,7 @@ from .models import Report
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import BlogPost
+from tinymce.widgets import TinyMCE
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True, widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
@@ -92,7 +93,7 @@ class ReportForm(forms.ModelForm):
 
     mining_type = forms.ChoiceField(choices=MINING_TYPE_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}), required=False)
     scale = forms.ChoiceField(choices=SCALE_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
-    machinery_used = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Machinery used (e.g., excavators, dredgers)'}))
+    machinery_used = forms.CharField(widget=forms.TextInput(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded', 'placeholder': 'Machinery used (e.g., excavators, dredgers, gold pans, sluice boxes)'}))
 
     mining_method = forms.ChoiceField(choices=METHOD_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
     environmental_impact = forms.MultipleChoiceField(choices=EFFECT_CHOICES, widget=forms.CheckboxSelectMultiple())
@@ -110,19 +111,27 @@ class ReportForm(forms.ModelForm):
     status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
 
 
+# class BlogPostForm(forms.ModelForm):
+#     class Meta:
+#         model = BlogPost
+#         fields = [
+#             'title',
+#             'content',
+#             'images',
+#             'categories',
+#             'references',
+#             'summary',
+#             'call_to_action',
+#             'contact_info'
+#         ]
 class BlogPostForm(forms.ModelForm):
+    content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    summary = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), required=False)
+    references = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), required=False)
+
     class Meta:
         model = BlogPost
-        fields = [
-            'title',
-            'content',
-            'images',
-            'categories',
-            'references',
-            'summary',
-            'call_to_action',
-            'contact_info'
-        ]
+        fields = ['title', 'content', 'summary', 'references', 'call_to_action', 'contact_info']
 
 class SearchForm(forms.Form):
     location = forms.CharField(

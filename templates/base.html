@@ -94,5 +94,21 @@
     <!-- Leaflet.js JavaScript -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch/dist/geosearch.js"></script>
+
+    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+
+    <script>
+        tinymce.init({
+            selector: 'textarea',  // This applies TinyMCE to any textarea on the page
+            plugins: 'lists',  // Include the lists plugin
+            toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent',  // Add bullet and numbering buttons
+            menubar: false,  // Optional: hide the menubar
+            branding: false,  // Optional: hide the TinyMCE branding
+            height: 400,  // Optional: set height of editor
+          });
+    </script>
+
+    </script>
+
 </body>
 </html>

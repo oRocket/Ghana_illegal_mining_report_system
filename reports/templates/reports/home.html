@@ -49,7 +49,7 @@
 </div>
 
 <h1 class="text-2xl font-bold tracking-tight text-gray-900 mt-10 mb-6 dark:text-white text-center">Recent Illegal Mining Incidents</h1>
-<div class="flex flex-wrap justify-between gap-5 px-4 md:px-6 lg:px-8">
+<div class="flex flex-wrap justify-center gap-5 px-4 md:px-6 lg:px-8">
     {% for incident in recent_incidents %}
         <a href="{% url 'report_detail' incident.pk %}" class="max-w-sm flex-grow p-6 bg-blue-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 card">
             <p class="text-lg font-bold tracking-tight text-gray-900 dark:text-white">Location: {{ incident.town }}</p>
@@ -71,7 +71,7 @@
         <a href="{% url 'blog_detail' blog.pk %}" class="max-w-sm flex-grow p-4 bg-green-100 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 blog-card">
             <p class="blog-title"><strong>Title:</strong> {{ blog.title }}</p>
             <p class="font-normal text-gray-700 dark:text-gray-400"><strong>Published on:</strong> {{ blog.date|date:"F j, Y" }}</p>
-            <p class="font-normal text-gray-700 dark:text-gray-400">{{ blog.content|truncatewords:30 }}</p>
+            <p class="font-normal text-gray-700 dark:text-gray-400">{{ blog.content|truncatewords:30|safe }}</p>
         </a>
     {% empty %}
         <p class="text-gray-600 dark:text-gray-400">No blog posts available.</p>
