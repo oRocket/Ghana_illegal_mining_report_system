@@ -1,5 +1,11 @@
 {
   "version": 2,
+  "builds": [
+    {
+      "src": "illegal_mining_report/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
   "routes": [
     {
       "src": "/static/(.*)",
@@ -9,5 +15,8 @@
       "src": "/(.*)",
       "dest": "illegal_mining_report/wsgi.py"
     }
-  ]
+  ],
+  "env": {
+    "PYTHON_VERSION": "3.9"
+  }
 }

@@ -110,20 +110,6 @@ class ReportForm(forms.ModelForm):
     # Add status field with choices
     status = forms.ChoiceField(choices=STATUS_CHOICES, widget=forms.Select(attrs={'class': 'w-full py-2 px-3 border border-gray-300 rounded'}))
 
-
-# class BlogPostForm(forms.ModelForm):
-#     class Meta:
-#         model = BlogPost
-#         fields = [
-#             'title',
-#             'content',
-#             'images',
-#             'categories',
-#             'references',
-#             'summary',
-#             'call_to_action',
-#             'contact_info'
-#         ]
 class BlogPostForm(forms.ModelForm):
     content = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
     summary = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), required=False)

@@ -4,11 +4,15 @@
 {% block title %}Education{% endblock %}
 
 {% block content %}
-<div class="container mx-auto mt-16 px-4"> <!-- Ensuring enough space from navbar -->
-    <h2 class="text-3xl font-bold text-gray-900 mb-6">Write About Illegal Mining</h2>
+<div class="container mx-auto mt-20 px-4"> <!-- Ensuring enough space from navbar -->
+    <div class="bg-yellow-600 w-full py-2"> <!-- Background color set to a darker gold -->
+        <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mt-2 mb-2 text-center"> <!-- Adjusted margin -->
+            Create a Blog on Illegal Mining
+        </h2>
+    </div>        
 
     <!-- Blog Submission Form -->
-    <h3 class="text-2xl font-bold mb-4">Submit a New Blog Post</h3>
+    <h3 class="text-2xl font-bold mt-2 mb-4">Submit a New Blog Post</h3>
     <form method="POST" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg p-6">
         {% csrf_token %}
 

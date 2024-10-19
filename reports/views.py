@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .forms import ReportForm, CustomUserCreationForm, SearchForm  # Import the SearchForm
+from .forms import ReportForm, CustomUserCreationForm, SearchForm
 from .models import Report, EducationalContent, BlogPost  # Update import to include BlogPost
 from django.contrib.auth.models import User
 from django.db import models  # Add this import at the top of your file

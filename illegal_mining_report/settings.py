@@ -33,10 +33,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Adjust the path as necessary
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG', default=False) == 'True'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = config('DEBUG', default=False, cast=bool)  # Convert to boolean
 
-ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1"]
+ALLOWED_HOSTS = ['127.0.0.1', '.vercel.app', '.now.sh']
+# ALLOWED_HOSTS = [".vercel.app", ".now.sh", "127.0.0.1"]
 # ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -63,7 +65,7 @@ TINYMCE_DEFAULT_CONFIG = {
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoise.Middleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -90,11 +92,24 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'illegal_mining_report.wsgi.application'
-
+# WSGI_APPLICATION = 'illegal_mining_report.wsgi.application'
+WSGI_APPLICATION = 'illegal_mining_report.wsgi.app'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+
+import dj_database_url
+
+# Configure the database
+DATABASES = {
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+}
+
+# Add connection options manually
+# DATABASES['default']['OPTIONS'] = {
+#     'connect_timeout': 60,  # Timeout of 60 seconds
+# }
+
 
 # DATABASES = {
 #     'default': {
@@ -103,16 +118,23 @@ WSGI_APPLICATION = 'illegal_mining_report.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("DB_NAME"),
-        "USER": os.environ.get("DB_USER"),
-        "PASSWORD": os.environ.get("DB_PASSWORD"),
-        "HOST": os.environ.get("DB_HOST"),
-        "PORT": os.environ.get("DB_PORT"),
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql_psycopg2",
+#         "NAME": os.environ.get("DB_NAME"),
+#         "USER": os.environ.get("DB_USER"),
+#         "PASSWORD": os.environ.get("DB_PASSWORD"),
+#         "HOST": os.environ.get("DB_HOST"),
+#         "PORT": os.environ.get("DB_PORT"),
+#     }
+# }
+
+# import dj_database_url
+
+# # Configure the database
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+# }
 
 # DATABASES = {
 #     'default': {
@@ -159,6 +181,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Optional: If you want to collect static files for production
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
@@ -177,6 +200,6 @@ LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to the dashboard after login
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add or update these settings
-SESSION_COOKIE_AGE = 1800  # Set session timeout to 30 minutes (1800 seconds)
-SESSION_SAVE_EVERY_REQUEST = True
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False  # Expire session when the browser is closed
+# SESSION_COOKIE_AGE = 1800
+# SESSION_SAVE_EVERY_REQUEST = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False

@@ -13,6 +13,4 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'illegal_mining_report.settings')
 
-application = get_wsgi_application()
-# added this vercel variable
-app = application
+app = get_wsgi_application()
