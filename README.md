@@ -4,7 +4,7 @@
 ![Homepage](static/images/homepage.png)
 
 ## Access the Live Version
-You can access the live version of the Ghana Illegal Mining Reporting System Web App at [Illegal Mining Reporting System](https://illegal-mining-report.vercel.app/) or [Illegal Mining Reporting System](https://ghana-illegal-mining-report-system.vercel.app/)
+You can access the live version of the Ghana Illegal Mining Reporting System Web App at [Illegal Mining Reporting System](https://illegal-mining-report.vercel.app/) or [Ghana Illegal Mining Reporting System](https://ghana-illegal-mining-report-system.vercel.app/)
 
 ## Overview
 This Django application allows users to report illegal mining activities, view educational content, and read blog posts related to mining issues. It features user registration, login/logout functionality, and the ability to submit, edit, and delete reports. The app is designed to educate the public on the impact of illegal mining on the environment and communities.
