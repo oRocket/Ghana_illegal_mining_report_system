@@ -4,8 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Site{% endblock %}</title>
-    
+    <title>{% block title %}Ghana Illegal Mining Reporting System{% endblock %}</title>
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/2529/2529850.png">
+    <!-- Google Font: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <!-- Flowbite CSS -->
@@ -95,19 +99,18 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch/dist/geosearch.js"></script>
 
-    <script src="{% static 'js/tinymce/tinymce.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tinymce@5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
         tinymce.init({
-            selector: 'textarea',  // Replace this with your actual textarea selector
-            plugins: 'advlist autolink lists link image charmap print preview textcolor',
-            menubar: false,  // Optional: hide the menubar
-            branding: false,  // Optional: hide the TinyMCE branding
-            height: 400,  // Optional: set height of editor
-            toolbar: 'undo redo | formatselect | fontselect | fontsizeselect | bullist numlist | forecolor backcolor | bold italic underline | link image | h1 h2 h3 h4 h5 h6',  // Include font size, font style, and headings
+            selector: 'textarea',
+            plugins: 'advlist autolink lists link image charmap print preview textcolor align',
+            menubar: false,
+            branding: false,
+            height: 400,
+            toolbar: 'undo redo | formatselect | fontselect | fontsizeselect | alignleft aligncenter alignright alignjustify | bullist numlist | forecolor backcolor | bold italic underline | link image',
         });
     </script>
-    
-    
+
 </body>
 </html>

@@ -82,7 +82,7 @@
                 <!-- Additional Comments, Submission Date, and Status -->
                 <div class="flex-grow p-6 bg-blue-100 border border-gray-200 rounded-lg shadow card">
                     <h2 class="text-2xl font-bold tracking-tight text-gray-700">Additional Comments</h2>
-                    <p>{{ report.additional_comments|default:"N/A" }}</p>
+                    <p>{{ report.additional_comments|default:"N/A"|safe }}</p>
                 </div>
 
                 <div class="flex-grow p-6 bg-blue-100 border border-gray-200 rounded-lg shadow card">

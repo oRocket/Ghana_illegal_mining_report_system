@@ -106,9 +106,9 @@ DATABASES = {
 }
 
 # Add connection options manually
-# DATABASES['default']['OPTIONS'] = {
-#     'connect_timeout': 60,  # Timeout of 60 seconds
-# }
+DATABASES['default']['OPTIONS'] = {
+    'connect_timeout': 60,  # Timeout of 60 seconds
+}
 
 
 # DATABASES = {
@@ -188,7 +188,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/')]
 STATIC_URL = "static/"
 # STATIC_ROOT = BASE_DIR/'assets'
 # STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -200,6 +200,6 @@ LOGIN_REDIRECT_URL = 'dashboard'  # Redirect to the dashboard after login
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Add or update these settings
-# SESSION_COOKIE_AGE = 1800
-# SESSION_SAVE_EVERY_REQUEST = True
-# SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_COOKIE_AGE = 1800
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
